@@ -68,6 +68,16 @@ It closes with "These settings are export-level and take precedence over instruc
 
 ---
 
+## 6. Pobble: the medication list and the intake disagree, and it changes the plan
+
+**What it is.** In `records/z2_MRS.txt` the structured medication list shows Fluoxetine active, refilled Dec 12 2025 with 3 refills through Dec 2026. The intake note from the Jul 30 2026 visit, seven months later, says `no meds, just simparica trio`. Both are in the same record.
+
+**Why it matters.** A first read that trusts the medication list would have the journey say "keep giving Pobble his fluoxetine" to an owner who may have stopped it months ago. A read that trusts the intake would miss that an anxiety plan the vet called a precondition for Pobble's blood draw (`postpone the blood draw ... until an effective anxiety management plan is in place`) may have lapsed, right as that blood draw is booked for Sept 28. Either way the message is wrong, and it is webhooked into the chart.
+
+**What we do instead.** The journey does not resolve it. It asks the owner directly (YES / NO / NOT SURE) before the Sept 28 appointment and routes any doubt to a nurse, because the serotonin-syndrome history makes this a clinical conversation, not an automated refill. Logged as decision D-POBBLE-1. This is the clearest case in the corpus of why a text export is not a substitute for a live medication feed with an active/inactive flag.
+
+---
+
 ## 4. (reserve) clinical calls the model should not make alone
 
 To be filled as journeys are drafted. For example, whether a declined senior panel is worth re-raising depends on the pet's age and findings. That is a judgement call, not a template.

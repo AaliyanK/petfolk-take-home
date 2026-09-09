@@ -64,6 +64,17 @@ For the standing rules and assumptions that apply to every journey, see `ground-
 | D-QUORRA-3 | `Guthrie Pellow` is the client name here and on Ikko3 and other records, different households. | Key on Patient ID `PT-6A2B6A`, never the client name. | Standing rule O2. Quorra is a clean example. |
 | D-QUORRA-4 | Exam quoted at `$99`, then `$135` in the same support note. | Use `$135`. | The staff member corrected themselves in the same note. Not a real conflict, noted so a reviewer sees we read to the end. |
 
+### Pobble (`z2_MRS`)
+
+| # | Conflict | Decision | Reasoning |
+| --- | --- | --- | --- |
+| D-POBBLE-1 | Fluoxetine is active on the medication list (refilled Dec 2025, 3 refills through Dec 2026) but the Jul 30 2026 intake says `no meds, just simparica trio`. | Do not assume on or off. Surface it as the journey's central branch, with a YES/NO/NOT SURE check that routes to a nurse. | The vet's own plan ties the stressful blood draw to `an effective anxiety management plan is in place`, and the PABW is booked for Sept 28. If he is off his meds, that conversation happens before the draw, not after. The serotonin-syndrome history means it is a nurse call, not an automated refill. |
+| D-POBBLE-2 | A murmur and arrhythmia were noted twice in Sep 2024; `Cardiovascular: Normal` on the calm Jul 2026 exam. Not on the problem list. | The journey never asserts heart disease. It flags the record's own recommendation (`cardiac workup due to murmur heard today and his history of HW disease`) as a question for the DVM at the pre-anaesthetic stage. | Both 2024 exams were confounded by extreme tremor, and the second by an active fluoxetine reaction. The finding was never confirmed and the most recent exam was normal. But it bears on anaesthesia safety for the dental, so the DVM should weigh it. |
+| D-POBBLE-3 | Breed is `Chihuahua` (Petfolk), `Chihuahua - Mixed` (Petco), `Rat Terrier` (one North Naples record). | Use `Chihuahua`. | Journey does not hinge on breed. |
+| D-POBBLE-4 | Move origin given as both South Carolina and South Florida. | Use the pattern (multiple moves + loss of the other dog + new dog), not the origin. | The stress stack is what matters clinically, not which state. |
+| D-POBBLE-5 | `Toby` used for Pobble in one intake's free text; attachments titled `Pobble Bodhi`. | No alternate or personal name quoted. Key on Patient ID `PT-306BA7`. | Pseudonymiser name bleed. Client name `Bodhi Skarn` is consistent here, unlike Ikko3 and Quorra. |
+| D-POBBLE-6 | Weight fell 12.8 to 10.6 lb over two years while BCS rose 4 to 5 (ideal). | Low stakes on its own, but a reason the Sept 28 PABW should be a full panel, not a pre-anaesthetic minimum. | He was underweight from the 2024 anxiety crisis and is now ideal. Paired with an un-worked-up polydipsia flag and two-year-old labs, a full panel is warranted. |
+
 ## Clinical calls (human in the loop)
 
 These are calls Aaliyan made or confirmed, not the model.
@@ -78,4 +89,9 @@ These are calls Aaliyan made or confirmed, not the model.
 | C-QUORRA-2 | Quorra | The bronchitis cause is not stated by any message. The journey coordinates getting the outside records in and lets the DVM answer the "is it dental" question. | in `working/design/quorra.md` Track C |
 | C-QUORRA-3 | Quorra | The single highest-value action is importing the outside clinic's records (x-rays, bronchitis notes, meds) into the Vetspire chart. It is both a clinical prerequisite for anaesthesia and the main retention move for an owner comparing clinics. | in `working/design/quorra.md` Track A |
 | C-QUORRA-4 | Quorra | Membership status is unknown, so the PetfolkCare touch branches on the real status rather than assuming. | in `working/design/quorra.md` Track E |
+| C-POBBLE-1 | Pobble | The whole dental timeline is gated behind resolving the anxiety-medication question. The journey checks whether Pobble is on his fluoxetine before the Sept 28 blood draw and routes any doubt to a nurse. | in `working/design/pobble.md` Track A |
+| C-POBBLE-2 | Pobble | No message ever pairs fluoxetine with trazodone or suggests adding a second serotonergic drug. The serotonin-syndrome history is a hard rule stated in the Track C anxiety-plan email. | in `working/design/pobble.md` Track C |
+| C-POBBLE-3 | Pobble | The Sept 28 PABW is treated as load-bearing. A missed appointment gets one firm re-book (SMS + a human callback), tied to the consequence, not a passive reschedule nudge. | in `working/design/pobble.md` Track B |
+| C-POBBLE-4 | Pobble | Atopy is a dormant-watch track: no routine touches while quiet, one seasonal check before January, opens only on a reported flare. | in `working/design/pobble.md` Track D |
+| C-POBBLE-5 | Pobble | Lepto is not re-pushed after repeated declines. At most one factual line at the annual if the DVM wants it raised. | in `working/design/pobble.md` Track E |
 | _more added as journeys are drafted_ |       |                                                                                                                                                                                                                             |                                       |

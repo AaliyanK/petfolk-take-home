@@ -56,9 +56,12 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 1: `working/evidence/pobble.md`. Five live threads: anxiety (serotonin-syndrome history from concurrent fluoxetine + trazodone at the first visit), atopy (Cytopoint failed, switched to Apoquel, now quiet and off meds), AVDC stage 3 periodontal disease (the live thread, PABW booked Sept 28 2026), a soft cardiac finding (murmur + arrhythmia heard twice in Sep 2024 under tremor, normal on the calm Jul 2026 exam), and 2 years of declined senior bloodwork (last panel Sep 2024 showed mild ALT/AST elevation, never rechecked).
 - Central catch (evidence section 8 E): fluoxetine status is unclear. Med list shows it active (refilled Dec 2025, 3 refills), Jul 30 2026 intake says "no meds, just simparica trio". The vet's plan ties the stressful blood draw to "an effective anxiety management plan in place", and the PABW is now Sept 28. This is the journey's central branch.
 - Per Aaliyan's instruction, stopped at evidence. Design not started until he reviews.
+- Aaliyan reviewed and approved the calls (fluoxetine ambiguity as the central branch, cardiac finding as a DVM question, breed/name/move calls low stakes).
+- Phase 2: `working/design/pobble.md`. Five tracks: A the dental spine (wellness visit to COHAT, with the anxiety-before-bloodwork check gating the Sept 28 PABW), B an appointment-keeping safety net (2 prior cancellations on record), C anxiety as a safety-framed standing spine (never fluoxetine + trazodone), D atopy as dormant-watch, E the recurring spine (cataracts, PetfolkCare, vaccines, fecal). ~24 touches plus a 6-touch post-op mini-track. Cost $0.28 unconditional / $24 if every gate fires.
+- Tracked: decisions-log.md D-POBBLE-1..6 and C-POBBLE-1..5; model-corrections.md #6 (the med-list vs intake conflict as a "caught the model" example).
 
 ## Planned
 
-- Aaliyan reviews `working/evidence/pobble.md` against the source and makes the calls, then I build the design (Phase 2), then HTML + verify.
+- Aaliyan reviews `working/design/pobble.md`, then HTML + verify.
 - Then Quorra2 (`dl_MRS-_1_`), the header-only stub.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.
