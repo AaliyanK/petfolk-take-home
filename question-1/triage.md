@@ -105,10 +105,29 @@ Two things are going on:
 If those three move to T2 the spread becomes T0 five, T2 thirteen, T3 six, which is closer to right.
 I left them at T3 in the first pass so the borderline is visible rather than smoothed away.
 
-## What I changed from the first pass
+## The review pass
 
-To be filled in after Aaliyan reads all 25 rows. Each entry: the record, what the model called it,
-what he changed it to, and why. This section is the human in the loop, made visible.
+I read all 25 rows against the record summaries and confirmed the archetype and tier on every one. No
+per pet overrides. The first pass held for three reasons: the rubric was agreed before any row was
+written, the facts behind each row come from full reads that were already verified for Q1a and the
+ingestion log, and a triage row is a routing call, not a treatment plan, so the bar is "is this the
+right lane" not "is this the right dose."
+
+Three things I looked at hardest and where I came out:
+
+- **The borderline T3s.** Vorpal, Rylo and Ikko2 sit on the T2 to T3 line (see the distribution check
+  above). I left them at T3. Whether they move is a question of where the tier cost bands are drawn,
+  which is rubric tuning, not a per pet error, and it is cleaner to decide it once against the rubric
+  than to nudge three rows.
+- **The suppression calls on the vulnerable pets.** Pengo (geriatric, financially limited), Ulmo (r/o
+  lymphoma) and Ikko2 (moving away). Each of these has "do not send" doing real work: no promotional
+  contact for Pengo, no routine comms for Ulmo until the FNA resolves, a handoff not a retention play
+  for Ikko2. These are the rows where wrong comms cause harm, so they get the strongest suppression in
+  the table.
+- **The items that still need a real vet.** Vorpal's record has a "lepto booster follow up Aug 7" that
+  contradicts a documented lepto reaction. The row does not resolve it, it holds the reminder and
+  routes the question to a clinician. That is the correct output of a triage, a flagged handoff, not a
+  guess.
 
 ## Patterns across the 25
 

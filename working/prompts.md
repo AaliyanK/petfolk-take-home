@@ -94,10 +94,12 @@ Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + veri
 - First-pass tier spread T0:5 / T2:10 / T3:9. Not a pyramid; flagged that the set is curated not sampled, and that Vorpal / Rylo / Ikko2 are the borderline T2-vs-T3 calls for Aaliyan.
 - Data traps surfaced in the rows: the dl:MRS / dl:MRS-(1) export duplicate, Sindri (z1:MRS-16) as Pobble's housemate, Vorpal's contradictory "lepto booster Aug 7" note, the 6 stubs the injection wants mislabelled.
 
+- Aaliyan reviewed all 25 rows: confirmed every archetype and tier, no per-pet overrides. Replaced the "What I changed" placeholder with a "The review pass" section documenting the gate ran and the outcome (why the first pass held; the three borderline T3s left as-is; the vulnerable-pet suppression calls; the items flagged for a real vet). Q1b finalised.
+- README folder table updated to list triage.csv.
+
 ## Planned
 
-- Aaliyan reads the 25 rows, marks what he would change, we fill "What I changed", revise.
-- Then Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md` + the Pengo3 raw Braze blocks.
+- Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md` + the Pengo3 (`dl_MRS-_4_`) raw Braze API blocks (Petfolk's current outbound program).
 - Voice-pass deliverable-facing docs. Aaliyan records the video.
 - Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md`.
 - Voice-pass on deliverable-facing docs. Aaliyan records the video.

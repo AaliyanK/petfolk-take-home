@@ -14,7 +14,8 @@ Start here, then go where you want.
 | `ground-rules.md` | The 11 constraints every journey follows and Q2 is built on. Read this first. |
 | `question-1/journeys/index.html` | The map to Q1a. Start here for Question 1. |
 | `question-1/journeys/` | 12 month journeys for 5 pets, in the format of the Biscuit example (HTML) |
-| `question-1/triage.md` | Q1b: all 25 records, my call on each, plus the patterns across them |
+| `question-1/triage.md` | Q1b: the rubric, all 25 records with my call on each, the distribution check, the patterns |
+| `question-1/triage.csv` | Q1b as a machine readable spec, one row per record, columns mapped to Q2 engine fields |
 | `question-2/build.md` | How I would build the system that decides, for 42 clinics now and 100 in two years |
 | `working/how-i-worked.md` | The narrative: order of work, where AI did the work, where I overrode it |
 | `working/how-i-build-a-journey.md` | The repeatable method behind a journey. Also the spec Q2 automates. |
