@@ -85,9 +85,20 @@ Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + veri
 - Two forward links in index.html point to files not yet built: `../triage.md` (Q1b) and `../../question-2/build.md` (Q2). They resolve once those are written.
 - Paused here per Aaliyan.
 
+## Session 9 — Q1b, the 25-record triage
+
+- Documented the AI / human division of labour: added a "Division of labour" section to `how-i-worked.md` and method decision M8 to `decisions-log.md`. Aaliyan wrote the split, I adapted it into the standing project model.
+- Aaliyan approved the proposed rubric (archetypes, T0-T3 tiers with cost bands, cross-cutting flags).
+- Built `question-1/triage.md`: the rubric, the 25-row table (archetype / tier / the 1-2 line call / do-not-send), a distribution check, a "What I changed" section for Aaliyan to fill after review, and the patterns section (compressed from `ingestion-log.md` observations).
+- Built `question-1/triage.csv`: the same 25 rows as a machine-readable spec, columns mapped to Q2 engine fields (doc_id, archetype, tier, starts_on, highest_value_touch, do_not_send, flags, q1a_target).
+- First-pass tier spread T0:5 / T2:10 / T3:9. Not a pyramid; flagged that the set is curated not sampled, and that Vorpal / Rylo / Ikko2 are the borderline T2-vs-T3 calls for Aaliyan.
+- Data traps surfaced in the rows: the dl:MRS / dl:MRS-(1) export duplicate, Sindri (z1:MRS-16) as Pobble's housemate, Vorpal's contradictory "lepto booster Aug 7" note, the 6 stubs the injection wants mislabelled.
+
 ## Planned
 
-- Q1b: `question-1/triage.md`, 25-record triage table from `ingestion-log.md`.
+- Aaliyan reads the 25 rows, marks what he would change, we fill "What I changed", revise.
+- Then Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md` + the Pengo3 raw Braze blocks.
+- Voice-pass deliverable-facing docs. Aaliyan records the video.
 - Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md`.
 - Voice-pass on deliverable-facing docs. Aaliyan records the video.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.

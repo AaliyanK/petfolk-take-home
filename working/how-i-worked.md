@@ -12,12 +12,27 @@ The narrative of the work. For the repeatable method behind a single journey, se
 6. Wrote `ground-rules.md`, the 11 constraints every journey follows.
 7. Per journey: an evidence file of grep-checked quoted spans, then a design in markdown, then the HTML, then a script that re-checks every quote against the source.
 
-## Where AI did the work
+## Division of labour
 
-- First pass reading and summarising 25 records into a scannable index.
-- Pulling candidate quoted spans out of long records.
-- First drafts of each journey and the build memo.
-- The parse and quote-check scripts.
+The brief says to use AI heavily. The split I settled on, and the reason for each side of it:
+
+**AI does:**
+
+- The mechanical read of all 25 records into a scannable index (`ingestion-log.md`).
+- First-pass archetype and tier for every record, applying the same rubric on record 23 as on record 3.
+- Drafting the two-line rationale and the highest-value touch per pet.
+- Flagging the data traps per row: stub, duplicate, name bleed, the planted injection.
+- Keeping columns consistent and mapped to the fields the Q2 engine would compute.
+- A distribution check: does the tier spread look sane, are there rows where the archetype and the findings disagree.
+- Pulling candidate quoted spans out of long records, and the parse and quote-check scripts.
+
+**I own:**
+
+- **The rubric.** The tiers, the cut-lines, what each tier costs, the human-involvement rule. If a reviewer disagrees with an answer they will disagree with the rubric, so it reads as mine.
+- **The clinical edge calls.** Whether a declined senior panel is worth re-raising depends on the pet's age and findings, not a template. Whether Pengo is a hospice conversation or a workup push. AI proposes, I ratify or override, and every override is a bullet that shows judgment.
+- **The tone and consent calls.** Quorra's vaccine decline, Vorpal's lepto reaction, the financially limited seniors, the geriatric quality-of-life cases. These are where wrong comms do real harm.
+- **The final read** of all 25 triage rows to catch the one that is wrong.
+- **The framing.** The five Q1a journeys are the worked examples of five archetypes, and Q1b is the manual version of what the Q2 engine outputs.
 
 ## Where I overrode it
 
