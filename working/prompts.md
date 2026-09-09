@@ -18,7 +18,18 @@ Everything used to produce the deliverable. Append as we go.
 - Method for the big files: read every INTAKE / SUBJ / Presenting Concerns / VITALS / OBJECTIVE / ASSESSMENT / PLAN / DISCHARGE / decline / support-comm block in full; skimmed the repeated drug tables, repeated lab-result tables, and pure appointment-reminder boilerplate (no new info in those).
 - Rewrote every large-file summary in `ingestion-log.md` from the full read. Several were materially wrong before (e.g. Ikko's nail is a chronic bone fracture with an amputation decision, not just soft-tissue infection; Pobble's dental is finally moving via a Sep 28 PABW visit; Innox is intact; Rylo is mid-workup with a specialist GI panel).
 
+## Session 3 — Q1a, Ikko
+
+- Wrote `ground-rules.md` (11 constraints + 8 assumptions) and `how-i-build-a-journey.md` (the method).
+- Copied the 25 records into `records/`, gitignored so they stay out of the public repo.
+- Phase 1: `working/evidence/ikko.md`, every quotable span grep-checked, 58 spans, 0 misses under whitespace normalisation.
+- Discovered the source wraps sentences across lines. Logged as assumption 1 (Petfolk normalises whitespace). Verify script checks both raw and normalised.
+- Phase 2: `working/design/ikko.md`, six tracks, ~26 touches, cost $0.24 unconditional / $19.80 if every gate fires. Aaliyan approved.
+- Phase 3: `question-1/journeys/ikko.html`, cloned from the Biscuit CSS. Verbatim record quotes wrapped in `<span class="q">` and highlighted; proposed message copy in plain quotes, Biscuit style.
+- Phase 4: `working/scripts/verify_quotes.py`. Run: `python working/scripts/verify_quotes.py question-1/journeys/ikko.html records/z1_MRS-45.txt`. Result: 46 spans, 38 raw match, 8 match under whitespace normalisation, 0 misses.
+
 ## Planned
 
-- Small Python pass to split every record on the `---` header, pull `doc_id` + `page_count`, and dump the 4 header lines + signalment line into one CSV for the triage table skeleton.
-- For the 5 journey targets: extract candidate verbatim spans (diagnoses, drug names+sig, weights/BCS, next-due dates, decline lines) into a per-pet file so quotes are copied, never retyped.
+- Phases 1 to 4 for Ikko3, Quorra, Pobble, Quorra2, in that order.
+- `question-1/journeys/index.html`, PDF exports, README summary.
+- Q1b triage from `ingestion-log.md`. Q2 build memo from `how-i-build-a-journey.md`.

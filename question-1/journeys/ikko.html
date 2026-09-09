@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ikko's year · journey from a medical record</title>
+<style>
+  :root{
+    --fur:#724333; --skin:#fef3e7; --scrubs:#64907f; --dark:#254d4f;
+    --sage:#b4c0a6; --coral:#e97657; --orange:#ef7c2e; --card:#fdf7ef;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--skin); color:var(--dark);
+    font-family:"Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.5;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:34px 26px 60px}
+
+  .mast{display:flex; align-items:baseline; gap:11px; margin-bottom:26px}
+  .mast .word{font-size:23px; font-weight:700; color:var(--fur); letter-spacing:-.01em}
+  .mast .tag{font-size:12.5px; color:var(--scrubs)}
+
+  h1{font-size:38px; line-height:1.06; color:var(--fur); font-weight:700; margin:0 0 8px; letter-spacing:-.015em}
+  .deck{font-size:14px; color:var(--scrubs); margin:0 0 26px; font-weight:600}
+
+  .patient{background:var(--card); border:1px solid var(--sage); border-radius:13px; padding:19px 21px; margin-bottom:20px}
+  .patient h2{font-size:19px; color:var(--fur); margin:0 0 13px; font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{border:1px solid var(--sage); border-radius:999px; padding:4px 12px; font-size:12.5px; color:var(--dark); background:#fff}
+
+  .demo{margin:0 0 20px; font-size:14.5px}
+  .demo b{color:var(--fur)}
+
+  .keyline{font-size:12px; color:var(--scrubs); margin:0 0 30px}
+  .keyline em{background:#fbeee0; font-style:italic; padding:0 2px; border-radius:2px}
+  .chip .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .phase{margin:34px 0 4px; padding-bottom:7px; border-bottom:2px solid var(--coral);
+         font-size:11.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--fur)}
+  .phase small{display:block; letter-spacing:.02em; text-transform:none; font-weight:600; color:var(--scrubs); margin-top:4px}
+
+  .row{display:grid; grid-template-columns:64px 22px 1fr; gap:0 10px; padding:13px 0 12px; align-items:start}
+  .day{font-size:12.5px; color:var(--scrubs); font-weight:600; text-align:right; padding-top:3px; white-space:nowrap}
+  .spine{position:relative; display:flex; justify-content:center; padding-top:7px}
+  .spine i{width:8px; height:8px; border-radius:50%; background:var(--scrubs); display:block; z-index:1}
+  .spine::before{content:""; position:absolute; top:0; bottom:-24px; width:1px; background:var(--sage)}
+  .row:last-of-type .spine::before{display:none}
+
+  .head{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+  .pill{font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+        padding:3px 9px; border-radius:5px; color:#fff; white-space:nowrap}
+  .p-sms{background:var(--orange)} .p-email{background:var(--scrubs)}
+  .p-push{background:var(--sage); color:var(--dark)} .p-visit{background:#fff; color:var(--fur); border:1.5px solid var(--fur)}
+  .p-sys{background:transparent; color:var(--scrubs); border:1px dashed var(--scrubs)}
+  .p-giga{background:#50aba6} .p-nurse{background:var(--dark)} .p-agent{background:var(--fur)}
+  .p-note{background:#bcb757; color:var(--dark)} .p-mail{background:var(--coral)}
+  .cond{font-size:10.5px; color:var(--coral); border:1px dashed var(--coral); border-radius:4px;
+        padding:2px 7px; white-space:nowrap; font-weight:600}
+  .cost{font-size:11.5px; color:var(--scrubs); margin-top:5px; font-variant-numeric:tabular-nums}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; margin:0 0 14px; font-size:11.5px; color:var(--dark)}
+  .legend span{display:flex; align-items:center; gap:6px}
+  .legend b{width:9px; height:9px; border-radius:3px; display:inline-block}
+  .what{font-size:15px; font-weight:650; color:var(--fur)}
+  .why{font-size:13.5px; color:var(--dark); margin-top:4px; opacity:.95}
+  .why .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+  .trig{font-size:12px; color:var(--scrubs); margin-top:5px; border-left:2px solid var(--sage); padding-left:8px}
+  .trig b{font-weight:600}
+
+  .note{background:var(--card); border-left:4px solid var(--scrubs); border-radius:0 9px 9px 0;
+        padding:17px 20px; margin:34px 0 22px; font-size:13.5px}
+  .note b{color:var(--fur)}
+  .note h3{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--fur); margin:16px 0 6px}
+  .note h3:first-child{margin-top:0}
+  .note ul{margin:6px 0; padding-left:18px}
+  .note li{margin:4px 0}
+  .note .q{background:#f4e6d6; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .money{display:flex; flex-wrap:wrap; gap:24px; margin:22px 0 8px}
+  .money div{font-size:13px}
+  .money b{display:block; font-size:22px; color:var(--fur); font-variant-numeric:tabular-nums}
+  .money span{color:var(--scrubs)}
+
+  footer{margin-top:30px; padding-top:18px; border-top:1px solid var(--sage); font-size:12.5px; color:var(--scrubs)}
+
+  @media print{ body{background:#fff} .wrap{padding:0} .phase{page-break-after:avoid} .row{page-break-inside:avoid} .note{page-break-inside:avoid} }
+  @media (max-width:560px){ .row{grid-template-columns:52px 18px 1fr} h1{font-size:29px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast"><span class="word">petfolk</span><span class="tag">primary and urgent veterinary care</span></div>
+
+  <h1>ikko's year</h1>
+  <p class="deck">journey built from record z1:MRS-45 &middot; one dog, twelve months</p>
+
+  <div class="patient">
+    <h2>Ikko &middot; 7y spayed female Basset Hound Mix &middot; Huntersville</h2>
+    <div class="chips">
+      <span class="chip"><span class="q">Currently a Member</span></span>
+      <span class="chip"><span class="q">Body Condition Score: 8</span>, target <span class="q">ideal weight ~27lbs</span></span>
+      <span class="chip"><span class="q">Atopy</span> on file, Apoquel daily</span>
+      <span class="chip"><span class="q">Chronic, displaced ungual process fracture of the right front fourth digit (P3, D4)</span></span>
+      <span class="chip"><span class="q">Nervous and resists meeting new people</span>, trazodone before visits</span>
+      <span class="chip"><span class="q">Odie pet insurance</span></span>
+      <span class="chip">housemate dog Rico</span>
+      <span class="chip">clinic <span class="q">approximately an hour away</span></span>
+    </div>
+  </div>
+
+  <p class="demo"><b>What this is:</b> twelve months of communication for one dog. A visit booked to
+  recheck a toenail turned out to be a chronic bone fracture of a weight-bearing toe, with amputation
+  on the table, on top of a skin allergy on daily medication and a weight the vet has been chasing
+  since last autumn.</p>
+
+  <p class="keyline"><em>Highlighted italic text</em> is quoted word for word from Ikko's record.
+  Everything else describes what the message does. Day 0 is the sedated nail procedure on 27 Jul 2026.</p>
+
+  <div class="legend">
+    <span><b style="background:#ef7c2e"></b>SMS</span>
+    <span><b style="background:#64907f"></b>Email</span>
+    <span><b style="background:#b4c0a6"></b>Push</span>
+    <span><b style="background:#50aba6"></b>Giga, AI chat</span>
+    <span><b style="background:#724333"></b>Support agent, human</span>
+    <span><b style="background:#254d4f"></b>Tele-advice nurse</span>
+    <span><b style="background:#bcb757"></b>Handwritten note</span>
+    <span><b style="background:#e97657"></b>Direct mail</span>
+  </div>
+
+  <div class="phase">Phase A &middot; visit day and discharge</div>
+
+  <div class="row"><div class="day">day 0</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-visit">Visit</span><span class="what">sedated nail-pull procedure, radiographs, culture taken</span></div>
+    <div class="why">One encounter, many events. Radiographs give the diagnosis: <span class="q">Chronic, displaced ungual process fracture of the right front fourth digit (P3, D4)</span>. Four medications dispensed. Her anxiety was covered with pre-visit trazodone.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed + Condition Diagnosed: nail fracture + Rx Dispensed &times;4 + Sample Collected: culture + Procedure Performed</div>
+    <div class="cost">clinic visit</div></div></div>
+
+  <div class="row"><div class="day">day 0, eve</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">enriched discharge summary</span></div>
+    <div class="why">The diagnosis in the vet's words, plus the home-care plan: <span class="q">strict rest with no jumping, stairs, or walks</span>, <span class="q">she should be carried outside for elimination</span>, <span class="q">An E-collar must be worn at all times to prevent licking at the bandage</span>, and <span class="q">return in two days for a recheck and bandage change</span>. It notes that <span class="q">A culture of the discharge from the nail bed was also collected today.</span> One line, because it is on her problem list, on watching the recessed vulva for signs of a urinary or skin-fold infection.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 1</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the orthopedic opinion, in writing</span></div>
+    <div class="why">The surgeon's note, so the owner has it to sit with. <span class="q">if the toe continues to be painful, amputation of the affected toe would provide the most reliable and definitive resolution</span>, and the reassurance that <span class="q">dogs generally adapt extremely well to the loss of a single digit and typically return to normal activity after recovery</span>. The conservative options: <span class="q">These include continuing antibiotics while the current infection resolves, using a soft padded bandage, or placing a splint under the paw</span>. And no pressure: <span class="q">A decision does not need to be made today</span>.</div>
+    <div class="trig"><b>trigger</b> Consult Note Added</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="phase">Phase B &middot; the nail, safety net
+    <small>enters on the diagnosis, exits when the toe is resolved or the surgery is booked</small></div>
+
+  <div class="row"><div class="day">day 1</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">recheck reminder: trazodone two hours before, bring the E-collar</span></div>
+    <div class="why">She is <span class="q">Nervous and resists meeting new people</span> and the protocol on file is <span class="q">Trazodone 2 hrs prior to visit</span>. The recheck is already booked, this only carries the prep.</div>
+    <div class="trig"><b>trigger</b> Appointment Booked: recheck + care_flag: high_fas</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">two-day recheck, bandage change, wound assessed</span></div>
+    <div class="why">Branches on the finding: healing, or not.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed: recheck</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="row"><div class="day">day 3</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"how is Ikko's paw? reply 1 to 3"</span></div>
+    <div class="why">1 is the bandage clean and dry and she is leaving it alone. 2 is she keeps getting at it or the bandage slipped. 3 is swelling, odor, or she is not using the leg.</div>
+    <div class="trig"><b>trigger</b> Rx Dispensed: Cefpodoxime + Condition Diagnosed: nail fracture</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 3</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-giga">Giga</span><span class="what">answers the reply in chat</span></div>
+    <div class="why">A 1 or a 2 is handled from the discharge already on file, for example <span class="q">An E-collar must be worn at all times to prevent licking at the bandage</span>. Anything it cannot answer from the record goes to Gladly rather than being guessed at.</div>
+    <div class="cost">$0.05</div></div></div>
+
+  <div class="row"><div class="day">day 4</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-advice call, paw not right</span>
+      <span class="cond">only if she replied 3</span></div>
+    <div class="why">A licensed veterinary nurse, because this is a clinical conversation. She can see the radiograph, the culture status and the dispensed medications, and she can rebook a recheck on the call.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="row"><div class="day">day 7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">culture is back, the antibiotic is the right one</span>
+      <span class="cond">only if the result does not change the plan</span></div>
+    <div class="why">If the culture changes the antibiotic, the nurse calls instead. No automated message ever names a new drug.</div>
+    <div class="trig"><b>trigger</b> Lab Result: culture + management_unchanged</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 12</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the decision, no rush</span></div>
+    <div class="why">Once the infection is settling. Restates the three options in the surgeon's words, closes with <span class="q">A decision does not need to be made today</span>, and points to the surgeon for the clinical questions and the support line for cost.</div>
+    <div class="trig"><b>trigger</b> Consult Note Added + Condition Status: stable</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 14</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-agent">Support agent</span><span class="what">call about the surgical estimate</span>
+      <span class="cond">only if the estimate was opened and not booked</span></div>
+    <div class="why">A human, not a clinical one. Cost, scheduling and the payment plan, which is what stalls a decision like this. She does not discuss the findings, anything clinical goes to the nurse queue.</div>
+    <div class="cost">$4.00</div></div></div>
+
+  <div class="row"><div class="day">day 14&ndash;30</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">surgery booked and the procedure funnel takes over &middot; toe resolves and the track exits</span></div>
+    <div class="trig"><b>trigger</b> Procedure Booked, or Condition Resolved: nail</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="phase">Phase C &middot; weight
+    <small>the spine of her year. Held back until the nail settles, since a weigh-in pitch collides with "no walks"</small></div>
+
+  <div class="row"><div class="day">day 45</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">weight program entry, framed for a Basset</span></div>
+    <div class="why">She is at <span class="q">Body Condition Score: 8</span> against a target of <span class="q">ideal weight ~27lbs</span>. The vet's plan, quoted: <span class="q">Advised reducing her current food volume by a quarter of a cup daily.</span>, <span class="q">Discussed that low-sodium green beans can be used as a low-calorie supplement to help with satiety.</span>, and <span class="q">Recommended reducing or eliminating high-calorie treats and table scraps, including the cheese used for medication administration.</span> The health stakes, quoted: <span class="q">Discussed the weight loss plan and the associated health risks of being overweight, including an increased risk for diabetes and ligament tears</span>. Because <span class="q">The owner reports giving cheese to help with medication administration.</span> and she is on several medications, the email offers pill pockets or a low-calorie vehicle so the diet and the pills do not fight. Call to action: a free technician weigh-in, no appointment.</div>
+    <div class="trig"><b>trigger</b> Weight Status Changed + bcs + breed_key</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 59</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-note">Note</span><span class="what">handwritten card from the technician who weighed her</span>
+      <span class="cond">only after a weigh-in actually happens</span></div>
+    <div class="why">Signed by the person who saw her, naming the thing she noticed. Nothing to click and nothing to buy.</div>
+    <div class="cost">$2.75</div></div></div>
+
+  <div class="row"><div class="day">day 66</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"two-minute weigh-in, no appointment needed"</span></div>
+    <div class="why">Monthly after that. Framed as getting back to her autumn weight first, then on to 27. Exits on Weight Status Changed to normal.</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="phase">Phase D &middot; atopy
+    <small>chronic, on daily Apoquel. The adherence touch waits so it does not stack on the acute nail medications</small></div>
+
+  <div class="row"><div class="day">day 20</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">Apoquel refill and adherence</span></div>
+    <div class="why">Her sig reads <span class="q">DO NOT skip doses, itching will return.</span> The record shows repeated refill friction with the pharmacy. This confirms her refill is set up and explains why to keep going even when her skin looks fine.</div>
+    <div class="trig"><b>trigger</b> Rx: Apoquel + days_supply low</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 240</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">allergy season is starting, the home-care plan</span></div>
+    <div class="why">Her skin is <span class="q">consistent with a flare-up of environmental allergies</span> and worse since she <span class="q">Recently relocated to North Carolina from the Poconos, with exposure to new grass and plants.</span> The vet's own advice, quoted: <span class="q">I recommend bathing itchy dogs 1 to 2 times a week</span>, <span class="q">wiping down your pet&rsquo;s fur with a moist cloth every time they come back inside</span>, <span class="q">Omega 3 fatty acid supplementation also helps with allergies</span>, and a <span class="q">non-scented, non-alcoholic baby wipe</span> for her paws.</div>
+    <div class="trig"><b>trigger</b> season window + geo + Atopy on file</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 245</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"how is Ikko's skin? reply 1 to 3"</span></div>
+    <div class="why">1 is fine. 2 is itchy but coping. 3 is raw skin, licking, or red eyes. She has an <span class="q">Allergic conjunctivitis</span> history, so red eyes is a real escalation signal, not a minor one.</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 245</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-giga">Giga</span><span class="what">answers the reply in chat</span></div>
+    <div class="why">A 1 or a 2 is answered from the home-care plan. A 3 goes to the nurse.</div>
+    <div class="cost">$0.05</div></div></div>
+
+  <div class="row"><div class="day">day 247</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-advice, the flare is not controlled</span>
+      <span class="cond">only if she replied 3</span></div>
+    <div class="why">A real re-decision point, a Cytopoint injection or an Apoquel change. She has <span class="q">Cytopoint 40 mg (Declined)</span> on file twice, so this is a conversation, not a refill.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="phase">Phase E &middot; dental
+    <small>one touch. The finding is minor and the estimate is stalled, not active</small></div>
+
+  <div class="row"><div class="day">day 90</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">a note about Ikko's teeth</span></div>
+    <div class="why">She has a <span class="q">Discolored 203 tooth.</span> and the team already <span class="q">discussed sending estimates for dental cleaning and extraction of 202</span>. What a cleaning under anaesthesia involves, and the PetfolkCare savings line. The conditional bundle: if she needs sedation for the toe anyway, 202 can be assessed on the same visit, one anaesthetic instead of two.</div>
+    <div class="trig"><b>trigger</b> Dental finding on file + estimate not booked</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="phase">Phase F &middot; the recurring spine</div>
+
+  <div class="row"><div class="day">day 30</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the insurance packet, sent automatically</span></div>
+    <div class="why">She is on <span class="q">Odie pet insurance</span> and the record shows the owner already <span class="q">requesting email delivery of invoice and discharge notes for Ikko for pet insurance</span>. After the nail work, the itemised invoice and discharge notes go out formatted for an Odie claim, without her having to ask again.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed + insurance_provider on file</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 180</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">PetfolkCare savings, six months in</span></div>
+    <div class="why">"Ikko's last six months: the toe procedure, radiographs, the nail-bed culture, ongoing Apoquel. Your membership covered $X." She is already a member, so this is confirmation the plan is working, not a pitch.</div>
+    <div class="trig"><b>trigger</b> 180-day event history + pfc_status: member</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">Nov 12<br>annual &minus;7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">confirm the forward-booked annual on "Nov 19, 2026"</span></div>
+    <div class="why">Existing spine, the journey just leaves it in place. She already has the visit booked.</div>
+    <div class="trig"><b>trigger</b> Appointment reminder, existing</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="row"><div class="day">Nov 14<br>annual &minus;5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">"let's make Ikko's visit her calmest yet"</span></div>
+    <div class="why">Fear-free tips for the annual, because she is <span class="q">Nervous and resists meeting new people</span>. Her trazodone instructions quoted from the plan on file.</div>
+    <div class="trig"><b>trigger</b> Appointment: annual + care_flag: high_fas</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">Nov 17<br>annual &minus;2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">trazodone reminder for the annual</span></div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">month 11</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">senior screening, gently</span></div>
+    <div class="why">She turns 8 soon. Why baseline bloodwork starts at this age. Kept soft, since she has a pattern of declining diagnostics.</div>
+    <div class="trig"><b>trigger</b> Lifestage approaching senior, computed from date of birth</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">month 12</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-push">Push</span><span class="what">forward-book next year's annual</span></div>
+    <div class="why">SMS fallback if there is no app engagement.</div>
+    <div class="trig"><b>trigger</b> 12 months since annual + no future appointment</div>
+    <div class="cost">$0.001</div></div></div>
+
+  <div class="row"><div class="day">month 12<br>+ 2 wks</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-mail">Direct mail</span><span class="what">postcard to the address on file</span>
+      <span class="cond">only if no email, app or SMS engagement in 90 days</span></div>
+    <div class="why">The last channel that still works when the digital ones have stopped. One card, not a series. Unlikely for this owner.</div>
+    <div class="cost">$0.85</div></div></div>
+
+  <div class="note">
+    <h3>What the record does not carry, and what we would ask Vetspire for</h3>
+    <p>This journey leans on events and fields the text export does not expose: Appointment Booked, Estimate Issued, Consult Note Added, prescription days-supply and refill-due, structured vaccine records with a current-record flag, weight as a time series, body condition as a coded field, an insurance-provider field, household links, and message engagement.</p>
+
+    <h3>Left out on purpose</h3>
+    <ul>
+      <li><b>The amputation decision itself.</b> That is the owner's call, led by the vet and the surgeon. The journey supports it and does not push it.</li>
+      <li><b>Household allergy management with Rico.</b> The data does not link the two dogs, so we do not build on an inferred household.</li>
+      <li><b>The recessed vulva as its own track.</b> One line in the discharge email is enough.</li>
+    </ul>
+
+    <h3>Inconsistencies caught in the record</h3>
+    <ul>
+      <li>One radiograph block reads <span class="q">LEFT MANUS</span> and <span class="q">left front digit four</span>, while the diagnosis, the problem list, the assessment and the discharge all say right front digit 4. Treated as a clinic template error, quoted the right-front phrasing.</li>
+      <li>Two bordetella records with different next-due dates, one in November 2026, one in March 2027. No vaccine-due message fires off the export. Vaccine reminders need a structured Vetspire feed that marks the current record.</li>
+      <li>The nail onset is <span class="q">Injury of nail - Jun 23, 2026</span> on the problem list and 07/03/2026 in a support note. Used the problem-list date.</li>
+    </ul>
+  </div>
+
+  <div class="money">
+    <div><b>$0.24</b><span>per year, unconditional. About 5 SMS plus monthly weigh-in SMS, 10 emails, 1 push, 2 Giga chats.</span></div>
+    <div><b>$19.80</b><span>per year if every gate fires: two nurse calls, one agent call, the handwritten note, the postcard.</span></div>
+  </div>
+  <p style="font-size:12.5px;color:var(--scrubs);margin-top:0">The spread is the point. A pet with an open surgical decision and a chronic allergy belongs at the high end. The $1.50 average describes neither number.</p>
+
+  <footer>Built from record z1:MRS-45. Every highlighted span is quoted verbatim and checked by string
+  match against the source. See <b>ground-rules.md</b> for the eleven constraints this journey follows
+  and <b>working/evidence/ikko.md</b> for every quoted span with its line number.</footer>
+
+</div>
+</body>
+</html>
