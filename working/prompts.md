@@ -47,6 +47,8 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 2: `working/design/quorra.md`. Five tracks: A the consult and making it productive (records-request kickoff is the retention move), B the dental pathway (vaccine/titer touch is factual only, consent-respecting), C the bronchitis, D the senior labs, E the senior wellness spine. ~22 touches. Cost $0.18 unconditional / $21 if every gate fires.
 - Key design call: no vaccine marketing ever. The only vaccine communication is a factual anaesthesia-clearance + titer explainer, and only if the DVM's clearance requires the decision.
 - Process note: evidence and design were produced in one pass here, collapsing the usual "evidence, Aaliyan reviews, then design" gate. Reason was the thin record (the evidence largely dictates the design). Aaliyan flagged it and confirmed the calls. Restoring the review gate for Pobble and Quorra2, which are large records.
+- Phase 3: `question-1/journeys/quorra.html`, cloned from the Ikko3 HTML. 5 phases, 24 rows, 32 verbatim spans, 8 gates.
+- Phase 4: `python working/scripts/verify_quotes.py question-1/journeys/quorra.html records/z2_2-MRS-2.txt`. Result: 32 spans, 12 raw / 20 whitespace-normalised / 0 misses. Tag depth balanced.
 
 ## Planned
 

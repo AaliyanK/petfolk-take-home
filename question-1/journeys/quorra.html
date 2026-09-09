@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>quorra's year &middot; journey from a medical record</title>
+<style>
+  :root{
+    --fur:#724333; --skin:#fef3e7; --scrubs:#64907f; --dark:#254d4f;
+    --sage:#b4c0a6; --coral:#e97657; --orange:#ef7c2e; --card:#fdf7ef;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--skin); color:var(--dark);
+    font-family:"Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.5;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:34px 26px 60px}
+
+  .mast{display:flex; align-items:baseline; gap:11px; margin-bottom:26px}
+  .mast .word{font-size:23px; font-weight:700; color:var(--fur); letter-spacing:-.01em}
+  .mast .tag{font-size:12.5px; color:var(--scrubs)}
+
+  h1{font-size:38px; line-height:1.06; color:var(--fur); font-weight:700; margin:0 0 8px; letter-spacing:-.015em}
+  .deck{font-size:14px; color:var(--scrubs); margin:0 0 26px; font-weight:600}
+
+  .patient{background:var(--card); border:1px solid var(--sage); border-radius:13px; padding:19px 21px; margin-bottom:20px}
+  .patient h2{font-size:19px; color:var(--fur); margin:0 0 13px; font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{border:1px solid var(--sage); border-radius:999px; padding:4px 12px; font-size:12.5px; color:var(--dark); background:#fff}
+
+  .demo{margin:0 0 20px; font-size:14.5px}
+  .demo b{color:var(--fur)}
+
+  .keyline{font-size:12px; color:var(--scrubs); margin:0 0 30px}
+  .keyline em{background:#fbeee0; font-style:italic; padding:0 2px; border-radius:2px}
+  .chip .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .phase{margin:34px 0 4px; padding-bottom:7px; border-bottom:2px solid var(--coral);
+         font-size:11.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--fur)}
+  .phase small{display:block; letter-spacing:.02em; text-transform:none; font-weight:600; color:var(--scrubs); margin-top:4px}
+
+  .row{display:grid; grid-template-columns:64px 22px 1fr; gap:0 10px; padding:13px 0 12px; align-items:start}
+  .day{font-size:12.5px; color:var(--scrubs); font-weight:600; text-align:right; padding-top:3px; white-space:nowrap}
+  .spine{position:relative; display:flex; justify-content:center; padding-top:7px}
+  .spine i{width:8px; height:8px; border-radius:50%; background:var(--scrubs); display:block; z-index:1}
+  .spine::before{content:""; position:absolute; top:0; bottom:-24px; width:1px; background:var(--sage)}
+  .row:last-of-type .spine::before{display:none}
+
+  .head{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+  .pill{font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+        padding:3px 9px; border-radius:5px; color:#fff; white-space:nowrap}
+  .p-sms{background:var(--orange)} .p-email{background:var(--scrubs)}
+  .p-push{background:var(--sage); color:var(--dark)} .p-visit{background:#fff; color:var(--fur); border:1.5px solid var(--fur)}
+  .p-sys{background:transparent; color:var(--scrubs); border:1px dashed var(--scrubs)}
+  .p-giga{background:#50aba6} .p-nurse{background:var(--dark)} .p-agent{background:var(--fur)}
+  .p-note{background:#bcb757; color:var(--dark)} .p-mail{background:var(--coral)}
+  .cond{font-size:10.5px; color:var(--coral); border:1px dashed var(--coral); border-radius:4px;
+        padding:2px 7px; white-space:nowrap; font-weight:600}
+  .cost{font-size:11.5px; color:var(--scrubs); margin-top:5px; font-variant-numeric:tabular-nums}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; margin:0 0 14px; font-size:11.5px; color:var(--dark)}
+  .legend span{display:flex; align-items:center; gap:6px}
+  .legend b{width:9px; height:9px; border-radius:3px; display:inline-block}
+  .what{font-size:15px; font-weight:650; color:var(--fur)}
+  .why{font-size:13.5px; color:var(--dark); margin-top:4px; opacity:.95}
+  .why .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+  .trig{font-size:12px; color:var(--scrubs); margin-top:5px; border-left:2px solid var(--sage); padding-left:8px}
+  .trig b{font-weight:600}
+
+  .note{background:var(--card); border-left:4px solid var(--scrubs); border-radius:0 9px 9px 0;
+        padding:17px 20px; margin:34px 0 22px; font-size:13.5px}
+  .note b{color:var(--fur)}
+  .note h3{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--fur); margin:16px 0 6px}
+  .note h3:first-child{margin-top:0}
+  .note ul{margin:6px 0; padding-left:18px}
+  .note li{margin:4px 0}
+  .note .q{background:#f4e6d6; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .money{display:flex; flex-wrap:wrap; gap:24px; margin:22px 0 8px}
+  .money div{font-size:13px}
+  .money b{display:block; font-size:22px; color:var(--fur); font-variant-numeric:tabular-nums}
+  .money span{color:var(--scrubs)}
+
+  footer{margin-top:30px; padding-top:18px; border-top:1px solid var(--sage); font-size:12.5px; color:var(--scrubs)}
+
+  @media print{ body{background:#fff} .wrap{padding:0} .phase{page-break-after:avoid} .row{page-break-inside:avoid} .note{page-break-inside:avoid} }
+  @media (max-width:560px){ .row{grid-template-columns:52px 18px 1fr} h1{font-size:29px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast"><span class="word">petfolk</span><span class="tag">primary and urgent veterinary care</span></div>
+
+  <h1>quorra's year</h1>
+  <p class="deck">journey built from record z2:2-MRS-2 &middot; one senior dog, twelve months</p>
+
+  <div class="patient">
+    <h2>Quorra &middot; 14y neutered male Yorkshire Terrier, a Yorkie cross &middot; Cypress, TX</h2>
+    <div class="chips">
+      <span class="chip"><span class="q">Quorra | 14 YO | Male (Neutered) | Yorkshire</span> Terrier</span>
+      <span class="chip">new to Petfolk, first visit is the 24 Jul 2026 consult</span>
+      <span class="chip"><span class="q">on teeth extraction/cleaning.</span> <span class="q">He only has a few teeth left.</span></span>
+      <span class="chip">owner declines vaccines, <span class="q">PP inquired about titering.</span></span>
+      <span class="chip"><span class="q">The Dr. said he did not need antibiotics but</span> owner suspects a dental cause</span>
+      <span class="chip">outside senior panel 7/1/2026, several rechecks pending</span>
+      <span class="chip">PetfolkCare status not on file</span>
+    </div>
+  </div>
+
+  <p class="demo"><b>What this is:</b> twelve months of communication for a 14 year old Yorkie who is new
+  to Petfolk. The owner emailed the day before a second-opinion consult that covers three things at
+  once: advanced dental disease that needs extractions under anaesthesia, a vaccine versus titer
+  standoff that is blocking that anaesthesia, and a new bronchitis diagnosis from another vet that the
+  owner suspects is coming from the mouth. Petfolk has no exam, no problem list and no vaccine history
+  on file. It has the owner's email and one forwarded lab panel. The journey is a new-client
+  onboarding, a senior workup and a consent conversation running together.</p>
+
+  <p class="keyline"><em>Highlighted italic text</em> is quoted word for word from Quorra's record.
+  Everything else describes what the message does. Day 0 is the second-opinion consult on 24 Jul 2026.</p>
+
+  <div class="legend">
+    <span><b style="background:#ef7c2e"></b>SMS</span>
+    <span><b style="background:#64907f"></b>Email</span>
+    <span><b style="background:#b4c0a6"></b>Push</span>
+    <span><b style="background:#50aba6"></b>Giga, AI chat</span>
+    <span><b style="background:#724333"></b>Support agent, human</span>
+    <span><b style="background:#254d4f"></b>Tele-advice nurse</span>
+    <span><b style="background:#bcb757"></b>Handwritten note</span>
+    <span><b style="background:#e97657"></b>Direct mail</span>
+  </div>
+
+  <div class="phase">Phase A &middot; the consult, and making it productive
+    <small>Petfolk has almost nothing on file. The first job is a good first visit</small></div>
+
+  <div class="row"><div class="day">&minus;1<br>23 Jul</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">consult confirmation and what to bring</span></div>
+    <div class="why">Booked the same afternoon the owner emailed. Bring the chest x-rays or the outside clinic's name so we can request them, the current bronchitis medication name and dose, any prior vaccine records, and Quorra's normal food. The frame: this is an illness consult at <span class="q">and exam would be considered illness $135</span>, covering <span class="q">a second opinion on teeth, vaccine questions, and bronchitis.</span>, and the dental decision follows an oral exam.</div>
+    <div class="trig"><b>trigger</b> Appointment Booked</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 0</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-visit">Visit</span><span class="what">the second-opinion consult</span></div>
+    <div class="why">The first Petfolk exam on record. Oral exam, listen to the chest, review the outside panel, and talk through the vaccine and titer question. <span class="q">Advised this could be discussed during the dental consultation.</span></div>
+    <div class="trig"><b>trigger</b> Encounter Completed</div>
+    <div class="cost">clinic visit</div></div></div>
+
+  <div class="row"><div class="day">day 0, eve</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">enriched consult summary</span></div>
+    <div class="why">This owner processes by reading, so everything the DVM found and recommended goes in writing, structured by the three topics. The vet's words, not template conclusions.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 1</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">records-request kickoff</span>
+      <span class="cond">only with the owner's authorisation</span></div>
+    <div class="why">The single highest-value action, and a clinical prerequisite. With the owner's consent to release, request Quorra's chest x-rays and bronchitis notes from the outside clinic so anaesthesia clearance and the bronchitis question both work from one chart. It also anchors an owner who is actively comparing clinics.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed + consent to release</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="phase">Phase B &middot; the dental pathway
+    <small>enters when the DVM confirms the dental and an estimate is issued, exits when it is booked or declined</small></div>
+
+  <div class="row"><div class="day">day 3</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the dental plan</span></div>
+    <div class="why">What the oral exam showed, what extraction under anaesthesia for a 14 year old involves, the pre-anaesthetic workup he mostly already has, and the base cost, <span class="q">cost dental $869</span>. Senior-anaesthesia framing: age alone is not a contraindication, here is how we de-risk it. A PetfolkCare savings line only if Vetspire shows he is not a member.</div>
+    <div class="trig"><b>trigger</b> Estimate Issued: dental</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 10</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the vaccine and titer decision, laid out factually</span>
+      <span class="cond">only if the DVM's clearance needs a vaccine decision</span></div>
+    <div class="why">In order: why anaesthesia needs clearance, what the primary DVM required, <span class="q">DVM requires all vx to do anesthesia, PP does not want to vx pet.</span>, what a titer measures and its limits, that <span class="q">Advised we do require RV as well.</span> and a rabies titer is often not accepted in place of the vaccine, <span class="q">it would be DVM discretion if we were able to accept a titer in leu of the vaccine.</span>, and the cost, <span class="q">$379.80 RV titer (non export)</span>. It closes: this is your decision with the DVM, here is a slot to talk it through. No benefit-of-vaccination language, no urgency.</div>
+    <div class="trig"><b>trigger</b> clearance_requires_vaccine_decision</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 12</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-call about the trade-off</span>
+      <span class="cond">only if the owner books it</span></div>
+    <div class="why">A real conversation, titer versus vaccine versus not proceeding, with a nurse who can pull the DVM's position. <span class="q">PP inquired about titering.</span> first, so this is a discussion the owner wants.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="row"><div class="day">day 24</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-agent">Support agent</span><span class="what">call about the dental estimate</span>
+      <span class="cond">only if the estimate is unbooked after about 14 days</span></div>
+    <div class="why">A human, not a clinical one. Cost, payment plan, scheduling. Anything clinical goes to the nurse queue.</div>
+    <div class="cost">$4.00</div></div></div>
+
+  <div class="row"><div class="day">day 14&ndash;40</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">dental booked and the procedure funnel takes over &middot; or the owner declines and the topic drops until the annual</span></div>
+    <div class="trig"><b>trigger</b> Procedure Booked, or decline recorded</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="phase">Phase C &middot; the bronchitis
+    <small>new onset in a 14 year old, diagnosed elsewhere. Coordinate, monitor, let the DVM answer the cause question</small></div>
+
+  <div class="row"><div class="day">day 2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">bronchitis coordination</span></div>
+    <div class="why">We have asked for the x-rays. In the meantime, what to watch for: worsening cough, exercise intolerance, blue or grey gums, not eating. When to call versus when to go straight to the ER.</div>
+    <div class="trig"><b>trigger</b> bronchitis flag + records requested</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"how is Quorra's breathing and cough? reply 1 to 3"</span></div>
+    <div class="why">1 is same or better. 2 is coughing more but eating and active. 3 is worse, tired, or off food. <span class="q">he was diagnosed with bronchitis last week</span>, so a check in a senior dog is warranted.</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-giga">Giga</span><span class="what">answers the reply in chat</span></div>
+    <div class="why">A 1 or a 2 is handled from the coordination email. A 3 goes to the nurse.</div>
+    <div class="cost">$0.05</div></div></div>
+
+  <div class="row"><div class="day">day 7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-advice</span>
+      <span class="cond">only if she replied 3</span></div>
+    <div class="why">A licensed veterinary nurse, because a worsening cough in a 14 year old is clinical.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="row"><div class="day">day 30</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the DVM's read, once the outside x-rays are in the chart</span></div>
+    <div class="why">Answers the owner's original worry, whether the airway and the mouth are connected and whether antibiotics are indicated. The owner wrote <span class="q">The Dr. said he did not need antibiotics but</span> <span class="q">I have second thoughts about that as I read that the bronchitis could possibly be caused by bacteria from his mouth.</span> This comes from the vet, not a template.</div>
+    <div class="trig"><b>trigger</b> outside records imported + DVM review</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="phase">Phase D &middot; the senior labs
+    <small>an outside panel the owner forwarded. Held until after the consult so the DVM frames it first</small></div>
+
+  <div class="row"><div class="day">day 14</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the lab explainer, plain language</span></div>
+    <div class="why">Walks the 7/1/2026 panel: high lipids, <span class="q">CHOLESTEROL 363 (HIGH)</span> and <span class="q">TRIGLYCERIDE 461 (HIGH)</span> with a <span class="q">Lipemia 2+</span> sample, what a fasted recheck clarifies, and the Yorkie-cross predisposition. The urine: <span class="q">Protein 2+ (HIGH)</span> with <span class="q">Specific Gravity 1.051 (HIGH)</span> and <span class="q">pH 8.0 (HIGH)</span>, plus <span class="q">Struvite (Triple P04) Crystals 4-10</span>, and the panel's own recommendation, <span class="q">Urine protein:creatinine ratio testing is recommended</span>. The borderline <span class="q">BUN/CREAT RATIO 28 (HIGH)</span>. The reassuring parts: <span class="q">T4 2.0</span> is normal, and <span class="q">HEARTWORM ANTIGEN NO ANTIGEN DETECTED</span>, <span class="q">Ova &amp; Parasite NONE SEEN</span>. What the DVM wants to recheck and when.</div>
+    <div class="trig"><b>trigger</b> outside panel on file + post-consult</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 16</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"want us to set up Quorra's recheck labs? reply YES"</span></div>
+    <div class="why">Owner-interest gated. A YES sets a care flag for the next visit.</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 120,<br>day 240</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">recheck-due nudge: the UPC and fasted lipids</span>
+      <span class="cond">only if the DVM ordered them and they are not done</span></div>
+    <div class="why">A short reminder tied to a real order, not a generic "time for labs" push.</div>
+    <div class="trig"><b>trigger</b> recheck ordered + overdue</div>
+    <div class="cost">$0.002 each</div></div></div>
+
+  <div class="phase">Phase E &middot; the senior wellness spine</div>
+
+  <div class="row"><div class="day">day 30</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">membership, branched on the real status</span></div>
+    <div class="why">If not a member, framed around the <span class="q">cost dental $869</span> and the recheck cadence a 14 year old needs, not a hard pitch. If a member, a "your plan covers this" reassurance instead. His status is not in the record, so the message waits for the real value.</div>
+    <div class="trig"><b>trigger</b> pfc_status resolved</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 45</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">new-to-Petfolk welcome</span></div>
+    <div class="why">How to reach us, virtual care, the after-hours path, and that a reply lands with a real person. Not salesy.</div>
+    <div class="trig"><b>trigger</b> new client + 45 days</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 90,<br>180, 270</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">senior check-in</span></div>
+    <div class="why">Weight, appetite, energy, cough, mobility, any new lumps. A light touch with a reply path to the nurse.</div>
+    <div class="trig"><b>trigger</b> recurring, senior</div>
+    <div class="cost">$0.015 each</div></div></div>
+
+  <div class="row"><div class="day">day 180</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">mid-year senior summary</span></div>
+    <div class="why">What Petfolk has done, what is being monitored, what is next.</div>
+    <div class="trig"><b>trigger</b> 180-day history</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 300</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">quality-of-life awareness</span>
+      <span class="cond">off by default, only if a quarterly check shows a decline</span></div>
+    <div class="why">The third-and-gentlest register. Not sent to a stable senior, only when the check-ins pick up a real change.</div>
+    <div class="trig"><b>trigger</b> decline signal</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">month 12</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-push">Push</span><span class="what">annual senior wellness forward-book</span></div>
+    <div class="why">SMS fallback if there is no app engagement.</div>
+    <div class="trig"><b>trigger</b> 12 months + no future appointment</div>
+    <div class="cost">$0.001</div></div></div>
+
+  <div class="row"><div class="day">month 12<br>+ 2 wks</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-mail">Direct mail</span><span class="what">postcard to the address on file</span>
+      <span class="cond">only if no email, app or SMS engagement in 90 days</span></div>
+    <div class="why">The last channel that still works when the digital ones have gone quiet. One card, not a series. Very unlikely, this owner is email-first.</div>
+    <div class="cost">$0.85</div></div></div>
+
+  <div class="note">
+    <h3>What the record does not carry, and what we would ask for</h3>
+    <p>Almost everything structured. A Petfolk vaccine history and due dates, a problem list, any exam with weight and body condition, PetfolkCare membership status, the outside clinic's bronchitis notes and chest radiographs and current medication, Estimate Issued, Appointment Booked and Completed events, and Lab Result events. This journey is largely a list of what Petfolk would need to pull in.</p>
+
+    <h3>Left out on purpose</h3>
+    <ul>
+      <li><b>Any vaccine encouragement.</b> The owner has declined, and consent is real. The journey gives information and stops. The only vaccine message is the factual anaesthesia-clearance and titer explainer in Phase B.</li>
+      <li><b>A stated cause for the bronchitis.</b> That is a DVM judgement at the consult, not something a message asserts.</li>
+      <li><b>Assuming membership either way.</b> It is not in the record, so the membership touch branches on the real status.</li>
+    </ul>
+
+    <h3>Inconsistencies caught in the record</h3>
+    <ul>
+      <li>The owner's forwarded email has apostrophes rendered as colons, for example "he:s never had bronchitis before". The journey quotes only fragments that avoid the mangled contraction.</li>
+      <li>Breed is written three ways: <span class="q">Yorkshire</span> Terrier on the Petfolk header, "Mixed" on the outside lab, and "yorkie-poo" by the owner. Used the header, described him as a Yorkie cross.</li>
+      <li>The client name is reused across the corpus for different households. Keyed on Patient ID PT-6A2B6A.</li>
+      <li>The exam was quoted at $99, then corrected to <span class="q">and exam would be considered illness $135</span> in the same note. Used $135.</li>
+    </ul>
+  </div>
+
+  <div class="money">
+    <div><b>$0.18</b><span>per year, unconditional. This owner is email-heavy: about 13 emails, 6 SMS, 1 push, 1 to 2 Giga chats.</span></div>
+    <div><b>$21</b><span>per year if every gate fires: two or three nurse calls, one agent call, and the records coordination.</span></div>
+  </div>
+  <p style="font-size:12.5px;color:var(--scrubs);margin-top:0">A 14 year old with three active problems and an owner comparing clinics belongs at the high end. The $1.50 average describes neither number.</p>
+
+  <footer>Built from record z2:2-MRS-2. Every highlighted span is quoted verbatim and checked by string
+  match against the source. See <b>ground-rules.md</b> for the eleven constraints this journey follows,
+  <b>working/evidence/quorra.md</b> for every quoted span with its line number, and
+  <b>working/decisions-log.md</b> for the judgment calls behind it.</footer>
+
+</div>
+</body>
+</html>
