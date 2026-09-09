@@ -97,10 +97,19 @@ Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + veri
 - Aaliyan reviewed all 25 rows: confirmed every archetype and tier, no per-pet overrides. Replaced the "What I changed" placeholder with a "The review pass" section documenting the gate ran and the outcome (why the first pass held; the three borderline T3s left as-is; the vulnerable-pet suppression calls; the items flagged for a real vet). Q1b finalised.
 - README folder table updated to list triage.csv.
 
+## Session 10 — Q2, the build document
+
+- Long planning discussion with Aaliyan on how to approach Q2. Settled: one short document (`question-2/build.md`), no separate plan file, ~1 page plus one architecture diagram. Not overcomplicating: ~90% of "how to scale" is "it is event driven on a stack that already scales", the interesting 10% is review without a medical review board.
+- Explained the Pengo3 (`dl_MRS-_4_`) record: its ~59 `NOTE with API Petfolk API` blocks are a 4-year verbatim transcript of Petfolk's entire current outbound program (all logistics), because the same webhook that will carry the new layer logs every send into the chart.
+- Built `question-2/build.md`: current state (quoted Pengo3 messages), the architecture (mermaid diagram, decisioning service between Segment and Braze), method-to-machine table, the review model (templates as the unit, verify_quotes.py as a runtime gate, fail closed, sampled audit, kill switch, a clinical-comms owner role that must be created), the reply path, rollout (shadow -> discharge-summary enrichment -> expand), the retiered budget, gaps/risks, AI/human split. ~1300 words + diagram.
+- Validated the mermaid syntax (installed mermaid@10.9.1 + jsdom in scratchpad, `mermaid.parse` clean).
+- README Q2 short version filled with a real summary.
+
 ## Planned
 
-- Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md` + the Pengo3 (`dl_MRS-_4_`) raw Braze API blocks (Petfolk's current outbound program).
-- Voice-pass deliverable-facing docs. Aaliyan records the video.
+- Voice-pass deliverable-facing docs (README, the journey demos, triage.md, build.md) for Aaliyan's style.
+- Aaliyan records the walkthrough video (decisions-log.md is the script).
+- Zip the repo (records/ included in the zip, gitignored from the public repo).
 - Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md`.
 - Voice-pass on deliverable-facing docs. Aaliyan records the video.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.

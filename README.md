@@ -51,8 +51,15 @@ should be a trigger. Multi pet households are common and the data does not link 
 header only stubs. Pre visit anxiety is everywhere, so a fear free pre visit track applies to a large
 share of the book.
 
-**Question 2.** In `question-2/build.md`. How the system that decides all of this would be built on the
-existing stack, for 42 clinics now and about 100 in two years.
+**Question 2.** In `question-2/build.md`, one page and a diagram. The thing that decides is the Q1
+method plus the Q1b rubric, run as one service between Segment and Braze: a classifier picks an
+archetype and tier, that selects a pre authored journey template, a guardrail layer checks consent,
+suppression and the verbatim quotes at send time, and anything it cannot fill safely fails closed to a
+task. The current outbound program is logistics only, quoted from the Pengo3 record. Scaling to 100
+clinics is nearly free because it is event driven off Vetspire, which every clinic already runs. The
+one hard part is review without a medical review board: it moves from per message to per template,
+plus a sampled audit and a kill switch, and it needs a clinical communications owner role that does
+not exist today.
 
 ## Decisions I made where the brief was open
 
