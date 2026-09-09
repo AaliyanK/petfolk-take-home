@@ -26,31 +26,26 @@ years running. The clinical detail never leaves the chart. That is what the new 
 ## The architecture
 
 The new layer is one service between Segment and Braze. It does not replace anything. The
-transactional spine above already runs across all 42 clinics and already reads structured Vetspire
-data, so adding a clinic is a config flag, not an integration.
+transactional spine already runs across all 42 clinics and already reads structured Vetspire data, so
+adding a clinic is a config flag, not an integration.
 
-```mermaid
-flowchart TB
-  V["Vetspire: system of record, emits events"] --> S["Segment: normalise and route"]
+**The flow, one event at a time:**
 
-  subgraph NEW[The new layer: decisioning service]
-    C["Classifier: archetype + tier, the Q1b rubric"] --> T["Template selector: tracks, triggers, gates, the Q1a method"]
-    T --> G["Guardrail: consent, suppression, chart budget, string-match"]
-  end
+1. A Vetspire event (encounter completed, condition diagnosed, estimate issued, weight status
+   changed) reaches the service through Segment, carrying the pet's problem list, meds, vaccine dates,
+   FAS, membership and consent as attributes.
+2. **Classify.** The pet gets an archetype and a tier, the Q1b rubric run as a ruleset.
+3. **Select.** The archetype and tier pick one pre-authored journey template, the Q1a method as
+   config: tracks, trigger conditions, channels, gates, timing, and content with named slots.
+4. **Guardrail.** Before anything sends, the touch is checked against the ground rules: consent,
+   suppression while a recheck loop is open, the chart-pollution budget, and a string-match on every
+   quoted span against the pet's own record.
+5. **Send, or fail closed.** If it passes, Braze sends on the chosen channel. If the guardrail cannot
+   fill a slot safely, nothing sends. It becomes a task for the clinic.
 
-  S --> C
-  G -->|passes| B["Braze: email, SMS, push, in-app"]
-  G -->|cannot fill safely| K["Task to the clinic, fail closed"]
-  B --> WH["Webhook copies the send into the Vetspire chart"]
-  WH --> V
-
-  DOC["Clinician approves each template once"] --> LIB[["Template library"]]
-  LIB --> T
-
-  B -. owner replies .-> GI["Giga: reads the message context"]
-  GI -->|clinical| NQ["Gladly: nurse queue"]
-  GI -->|cost or scheduling| AQ["Gladly: agent queue"]
-```
+**Around that loop:** every Braze send is copied into the pet's Vetspire chart by the webhook, so it
+becomes the medical record. Templates are approved once by a clinician before they can be selected.
+And every reply flows back through Giga to a support queue, covered under The reply path below.
 
 ## Method to machine
 
