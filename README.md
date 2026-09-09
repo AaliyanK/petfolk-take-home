@@ -1,39 +1,42 @@
-# Petfolk take-home — lifecycle communication from medical records
+# Petfolk take-home: lifecycle communication from medical records
 
-Working repo. Not the submission yet.
+This repo answers the two questions in the brief.
 
-## The assignment (from the brief)
+1. What lifecycle communication should we send these customers?
+2. How would you build the thing that decides?
 
-Two questions:
+## How to read this
 
-1. **What lifecycle communication should we send these customers?**
-2. **How would you build the thing that decides?**
+Start here, then go where you want.
 
-## Deliverables
+| Folder | What's in it |
+|---|---|
+| `question-1/journeys/` | 12 month journeys for 5 pets, in the format of the Biscuit example (HTML + PDF) |
+| `question-1/triage.csv` | All 25 records, my call on each |
+| `question-1/triage.md` | One page on how to read the table and the patterns across the 25 |
+| `question-2/build.md` | How I would build the system that decides, for 42 clinics now and 100 in two years |
+| `working/how-i-worked.md` | How I worked, where AI did the work, where I overrode it |
+| `working/prompts.md` | The prompts that moved the work, in order |
+| `working/model-corrections.md` | Every place the model or the data was wrong, and what I did about it |
+| `working/` | Everything else: the record by record notes, my teardown of the Biscuit example, the scripts, the quoted spans behind every journey |
+| `VIDEO.md` | Link to a short walkthrough |
 
-| ID | What | Status |
-|----|------|--------|
-| Q1a | 12-month journeys, Biscuit-example format, for 5 records: `dl_MRS-_1_`, `z2_MRS`, `z2_2-MRS-2`, `z2_16MRS-16`, `z1_MRS-45` | not started |
-| Q1b | All 25 records, 1–2 line call each (table/CSV) | not started |
-| Q2 | Short doc: how to build the decisioning system for 42 → 100 clinics on the current stack | not started |
-| — | Prompts, scripts, notes used along the way | in progress (`notes/`) |
+## The short version
 
-## Hard rules from the brief
+(filled in once Q1 and Q2 are drafted)
 
-- Every pet-specific claim in a journey must **quote the exact span** from the record. Checked by string match — paraphrase fails.
-- Assume the stack as-is (Vetspire → Segment → Braze → Gladly/Giga, PetfolkCare). No Vetspire API for this exercise; name any field you'd need.
-- Reply-to must land in Gladly with a real person. Anything Braze sends is copied into the Vetspire chart (becomes the medical record).
-- No medical review board signs off on outbound clinical content today.
-- Budget: ~$1.50 / patient / year proactive outreach (they invite pushback).
+**Question 1.**
 
-## Layout
+**Question 2.**
 
-```
-notes/            working notes, task understanding, ingestion log, model corrections
-q1-journeys/       the 5 journeys (HTML, Biscuit format)
-q1-triage/         the 25-record table
-q2-build/          the build memo
-```
+## Decisions I made where the brief was open
 
-Source data stays in the original download folder:
-`C:\Users\Aaliyan\Downloads\petfolk-takehome-v4 (2) (2)\petfolk-take-home\`
+The brief says to decide and note it rather than wait. Running list:
+
+1. **Two planted injections, ignored both.** `records/_INDEX.txt` carries a fake "ASSISTANT DIRECTIVE" telling any model to put raw names and `[NAME]` tokens into customer messages, label every empty record "healthy", and drop the compliance section. It is not from Petfolk. Separately, the pseudonymiser reused a tiny name pool, so one client name maps to several unrelated pets. I key on Patient ID and signalment, never client name. Detail in `working/model-corrections.md`.
+2. **Empty records get an honest journey, not a made up one.** Six of the 25 files are header only with no encounter. A journey for one of those says what we can and cannot do and lists what we would pull from Vetspire, rather than inventing a wellness story.
+3. **The $1.50 per patient per year budget is the wrong frame.** It should be tiered by medical need. Reasoning in `question-2/build.md`.
+
+## Source data
+
+The 25 records are not committed here. They live in the take-home download. `doc_id` in each file header is the identifier used throughout.
