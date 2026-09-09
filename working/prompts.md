@@ -60,8 +60,11 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 2: `working/design/pobble.md`. Five tracks: A the dental spine (wellness visit to COHAT, with the anxiety-before-bloodwork check gating the Sept 28 PABW), B an appointment-keeping safety net (2 prior cancellations on record), C anxiety as a safety-framed standing spine (never fluoxetine + trazodone), D atopy as dormant-watch, E the recurring spine (cataracts, PetfolkCare, vaccines, fecal). ~24 touches plus a 6-touch post-op mini-track. Cost $0.28 unconditional / $24 if every gate fires.
 - Tracked: decisions-log.md D-POBBLE-1..6 and C-POBBLE-1..5; model-corrections.md #6 (the med-list vs intake conflict as a "caught the model" example).
 
+- Phase 3: `question-1/journeys/pobble.html`, cloned from the Quorra HTML. 6 phases (A dental spine, A after the dental, B appointment-keeping, C anxiety, D atopy, E recurring spine), 33 rows, 41 verbatim spans, 10 gates, all 10 pill types.
+- Phase 4: `python working/scripts/verify_quotes.py question-1/journeys/pobble.html records/z2_MRS.txt`. Result: 41 spans, 34 raw / 7 whitespace-normalised / 0 misses. Tag depth balanced.
+
 ## Planned
 
-- Aaliyan reviews `working/design/pobble.md`, then HTML + verify.
+- Aaliyan verifies the Pobble spans against the source when he gets to it.
 - Then Quorra2 (`dl_MRS-_1_`), the header-only stub.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.

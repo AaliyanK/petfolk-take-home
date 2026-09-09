@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pobble's year &middot; journey from a medical record</title>
+<style>
+  :root{
+    --fur:#724333; --skin:#fef3e7; --scrubs:#64907f; --dark:#254d4f;
+    --sage:#b4c0a6; --coral:#e97657; --orange:#ef7c2e; --card:#fdf7ef;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--skin); color:var(--dark);
+    font-family:"Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.5;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:34px 26px 60px}
+
+  .mast{display:flex; align-items:baseline; gap:11px; margin-bottom:26px}
+  .mast .word{font-size:23px; font-weight:700; color:var(--fur); letter-spacing:-.01em}
+  .mast .tag{font-size:12.5px; color:var(--scrubs)}
+
+  h1{font-size:38px; line-height:1.06; color:var(--fur); font-weight:700; margin:0 0 8px; letter-spacing:-.015em}
+  .deck{font-size:14px; color:var(--scrubs); margin:0 0 26px; font-weight:600}
+
+  .patient{background:var(--card); border:1px solid var(--sage); border-radius:13px; padding:19px 21px; margin-bottom:20px}
+  .patient h2{font-size:19px; color:var(--fur); margin:0 0 13px; font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{border:1px solid var(--sage); border-radius:999px; padding:4px 12px; font-size:12.5px; color:var(--dark); background:#fff}
+
+  .demo{margin:0 0 20px; font-size:14.5px}
+  .demo b{color:var(--fur)}
+
+  .keyline{font-size:12px; color:var(--scrubs); margin:0 0 30px}
+  .keyline em{background:#fbeee0; font-style:italic; padding:0 2px; border-radius:2px}
+  .chip .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .phase{margin:34px 0 4px; padding-bottom:7px; border-bottom:2px solid var(--coral);
+         font-size:11.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--fur)}
+  .phase small{display:block; letter-spacing:.02em; text-transform:none; font-weight:600; color:var(--scrubs); margin-top:4px}
+
+  .row{display:grid; grid-template-columns:64px 22px 1fr; gap:0 10px; padding:13px 0 12px; align-items:start}
+  .day{font-size:12.5px; color:var(--scrubs); font-weight:600; text-align:right; padding-top:3px; white-space:nowrap}
+  .spine{position:relative; display:flex; justify-content:center; padding-top:7px}
+  .spine i{width:8px; height:8px; border-radius:50%; background:var(--scrubs); display:block; z-index:1}
+  .spine::before{content:""; position:absolute; top:0; bottom:-24px; width:1px; background:var(--sage)}
+  .row:last-of-type .spine::before{display:none}
+
+  .head{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+  .pill{font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+        padding:3px 9px; border-radius:5px; color:#fff; white-space:nowrap}
+  .p-sms{background:var(--orange)} .p-email{background:var(--scrubs)}
+  .p-push{background:var(--sage); color:var(--dark)} .p-visit{background:#fff; color:var(--fur); border:1.5px solid var(--fur)}
+  .p-sys{background:transparent; color:var(--scrubs); border:1px dashed var(--scrubs)}
+  .p-giga{background:#50aba6} .p-nurse{background:var(--dark)} .p-agent{background:var(--fur)}
+  .p-note{background:#bcb757; color:var(--dark)} .p-mail{background:var(--coral)}
+  .cond{font-size:10.5px; color:var(--coral); border:1px dashed var(--coral); border-radius:4px;
+        padding:2px 7px; white-space:nowrap; font-weight:600}
+  .cost{font-size:11.5px; color:var(--scrubs); margin-top:5px; font-variant-numeric:tabular-nums}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; margin:0 0 14px; font-size:11.5px; color:var(--dark)}
+  .legend span{display:flex; align-items:center; gap:6px}
+  .legend b{width:9px; height:9px; border-radius:3px; display:inline-block}
+  .what{font-size:15px; font-weight:650; color:var(--fur)}
+  .why{font-size:13.5px; color:var(--dark); margin-top:4px; opacity:.95}
+  .why .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+  .trig{font-size:12px; color:var(--scrubs); margin-top:5px; border-left:2px solid var(--sage); padding-left:8px}
+  .trig b{font-weight:600}
+
+  .note{background:var(--card); border-left:4px solid var(--scrubs); border-radius:0 9px 9px 0;
+        padding:17px 20px; margin:34px 0 22px; font-size:13.5px}
+  .note b{color:var(--fur)}
+  .note h3{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--fur); margin:16px 0 6px}
+  .note h3:first-child{margin-top:0}
+  .note ul{margin:6px 0; padding-left:18px}
+  .note li{margin:4px 0}
+  .note .q{background:#f4e6d6; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .money{display:flex; flex-wrap:wrap; gap:24px; margin:22px 0 8px}
+  .money div{font-size:13px}
+  .money b{display:block; font-size:22px; color:var(--fur); font-variant-numeric:tabular-nums}
+  .money span{color:var(--scrubs)}
+
+  footer{margin-top:30px; padding-top:18px; border-top:1px solid var(--sage); font-size:12.5px; color:var(--scrubs)}
+
+  @media print{ body{background:#fff} .wrap{padding:0} .phase{page-break-after:avoid} .row{page-break-inside:avoid} .note{page-break-inside:avoid} }
+  @media (max-width:560px){ .row{grid-template-columns:52px 18px 1fr} h1{font-size:29px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast"><span class="word">petfolk</span><span class="tag">primary and urgent veterinary care</span></div>
+
+  <h1>pobble's year</h1>
+  <p class="deck">journey built from record z2:MRS &middot; one senior dog, twelve months</p>
+
+  <div class="patient">
+    <h2>Pobble &middot; 8y neutered male Chihuahua &middot; Wake Forest, NC</h2>
+    <div class="chips">
+      <span class="chip"><span class="q">Pobble | 8.3 YO | Male (Neutered) | Chihuahua |</span> 10.6 lb</span>
+      <span class="chip"><span class="q">Currently a Member</span>, not insured, <span class="q">No - no microchip found, owner declines</span></span>
+      <span class="chip"><span class="q">Anxiety - Sep 16, 2024</span>, feral rescue, serotonin-syndrome history</span>
+      <span class="chip"><span class="q">Atopy - Jan 28, 2025</span>, Cytopoint failed, currently <span class="q">no meds, just simparica trio</span></span>
+      <span class="chip"><span class="q">Periodontal disease, AVDC stage 3 - Jul 30, 2026</span></span>
+      <span class="chip"><span class="q">mature cataracts OU - Jul 30, 2026</span></span>
+      <span class="chip"><span class="q">Heart worm positive in the past - Sep 16, 2024</span>, negative since</span>
+      <span class="chip">lives with a second dog, Sindri</span>
+      <span class="chip">pre-anaesthetic blood work booked 28 Sep 2026</span>
+    </div>
+  </div>
+
+  <p class="demo"><b>What this is:</b> twelve months of communication for an 8 year old feral-rescue
+  Chihuahua with a stacked history. Anxiety severe enough to destroy a wall. A serotonin-syndrome scare
+  from being put on two anxiety drugs at once. An atopy flare that beat Cytopoint. And now stage 3
+  periodontal disease that needs a dental under anaesthesia. He also has mature cataracts, a soft
+  cardiac finding from a bad-day exam two years ago, and two years of declined senior bloodwork. The
+  good news in the record: a pre-anaesthetic blood draw is already booked for 28 September. That one
+  appointment clears anaesthesia for the dental and finally produces fresh labs. The journey's job is
+  to get him there in good shape, then through the dental, without tripping the anxiety or the
+  drug-interaction history.</p>
+
+  <p class="keyline"><em>Highlighted italic text</em> is quoted word for word from Pobble's record.
+  Everything else describes what the message does. Day 0 is the wellness exam on 30 Jul 2026.</p>
+
+  <div class="legend">
+    <span><b style="background:#ef7c2e"></b>SMS</span>
+    <span><b style="background:#64907f"></b>Email</span>
+    <span><b style="background:#b4c0a6"></b>Push</span>
+    <span><b style="background:#50aba6"></b>Giga, AI chat</span>
+    <span><b style="background:#724333"></b>Support agent, human</span>
+    <span><b style="background:#254d4f"></b>Tele-advice nurse</span>
+    <span><b style="background:#bcb757"></b>Handwritten note</span>
+    <span><b style="background:#e97657"></b>Direct mail</span>
+  </div>
+
+  <div class="phase">Phase A &middot; the dental, wellness visit to COHAT
+    <small>the spine. Get Pobble from the 30 Jul visit, through the 28 Sep blood draw, to a dental under anaesthesia</small></div>
+
+  <div class="row"><div class="day">day 0<br>30 Jul</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-visit">Visit</span><span class="what">wellness exam</span></div>
+    <div class="why">Bordetella given, heartworm test negative, and two problems newly staged: <span class="q">Periodontal disease, AVDC stage 3 - Jul 30, 2026</span> and <span class="q">mature cataracts OU - Jul 30, 2026</span>.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed + Condition Diagnosed &times;2</div>
+    <div class="cost">clinic visit</div></div></div>
+
+  <div class="row"><div class="day">day 0, eve</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">enriched discharge summary</span></div>
+    <div class="why">The two new findings in the vet's words: <span class="q">moderate to heavy dental calculus and gingivitis</span>, and <span class="q">mature cataracts OU, menace wnl but limited vision, unable to examine fundus OU, no ocular discharge</span>. The dental plan: <span class="q">I recommend a professional dental cleaning within the next 1-2 months for him.</span> and <span class="q">please schedule an appointment for his pre-op bloodwork first.</span></div>
+    <div class="trig"><b>trigger</b> Encounter Completed</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 1</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the dental estimate and the order of operations</span></div>
+    <div class="why">The promised estimate, <span class="q">I will email you a dental estimate.</span> What a COHAT for stage 3 disease involves, likely extractions, and the sequence: blood work Sept 28, then review, then book the dental, because it <span class="q">is typically valid for 30 days.</span> PetfolkCare coverage, since he is <span class="q">Currently a Member</span>.</div>
+    <div class="trig"><b>trigger</b> Estimate Issued: dental</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">the anxiety-before-bloodwork check</span></div>
+    <div class="why">"Pobble's blood draw is Sept 28. To keep that visit low-stress, is he taking his fluoxetine every day right now? reply YES, NO, or NOT SURE." The record has him refilled on fluoxetine in Dec 2025, but the 30 Jul intake said <span class="q">no meds, just simparica trio</span>, and the vet's own plan was to <span class="q">postpone the blood draw for these tests until an effective anxiety management plan is in place</span>.</div>
+    <div class="trig"><b>trigger</b> PABW booked + Anxiety on file</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 9</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-call about the anxiety plan</span>
+      <span class="cond">only if she replied NO or NOT SURE</span></div>
+    <div class="why">A real conversation about <span class="q">the plan is to consider restarting fluoxetine as a monotherapy</span> and whether a single pre-visit dose of gabapentin is wanted for the draw itself. A nurse, not an automated refill, because of the drug history: <span class="q">high suspicion of serotonin syndrome from concurrent administration.</span> and the rule <span class="q">Discontinue fluoxetine and continue monitoring for signs of serotonin syndrome</span>.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="row"><div class="day">day 14<br>mid-Aug</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">pre-blood-work prep</span></div>
+    <div class="why">Fasting instructions, what the panel covers, and the pre-visit calm plan: gabapentin the night before and the morning of, at the dose he tolerated. Not a fluoxetine plus trazodone combination. His fear history referenced without drama.</div>
+    <div class="trig"><b>trigger</b> mid-August, PABW upcoming</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">21 Sep<br>PABW &minus;7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">blood-work reminder</span></div>
+    <div class="why"><span class="q">Pobble scheduled for a technician visit on Monday, September 28th at 8:30 AM</span>. Bring him fasted, give the pre-visit gabapentin.</div>
+    <div class="trig"><b>trigger</b> Appointment reminder, existing</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">26 Sep<br>PABW &minus;2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">gabapentin timing reminder</span></div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">28 Sep</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">blood draw happens</span></div>
+    <div class="why">Branches: cleared for anaesthesia, something flagged, or no-show (to Phase B).</div>
+    <div class="trig"><b>trigger</b> Encounter Completed: PABW</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="row"><div class="day">+2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">blood-work results</span></div>
+    <div class="why"><b>Cleared:</b> results explained, especially whether the two-year-old <span class="q">a very minor elevation in his liver enzymes that could be strictly due to aging</span> is still there. Next step is booking the dental inside the 30-day window. <b>Something flagged:</b> the nurse calls, no automated message names a finding.</div>
+    <div class="trig"><b>trigger</b> Lab Result: PABW + clearance_status</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">+5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the cardiac question, for the DVM</span>
+      <span class="cond">only if the DVM flags it</span></div>
+    <div class="why">The record's own recommendation: <span class="q">Recommend dental prophylaxis &amp; cardiac workup due to murmur heard today and his history of HW disease</span>. Framed as "your vet may want a quick heart check before anaesthesia", not an assertion that he has heart disease.</div>
+    <div class="trig"><b>trigger</b> DVM flag: pre-anaesthetic cardiac</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">+10</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-agent">Support agent</span><span class="what">dental scheduling and the estimate</span>
+      <span class="cond">only if cleared and the dental is not booked ~10 days later</span></div>
+    <div class="why">Cost, PetfolkCare coverage, scheduling. The 30-day bloodwork validity window is the reason to move.</div>
+    <div class="cost">$4.00</div></div></div>
+
+  <div class="row"><div class="day">COHAT day</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-visit">Visit</span><span class="what">the dental procedure</span></div>
+    <div class="why">Cleaning, charting, and the extractions stage 3 disease usually needs. Hands to the post-op touches below.</div>
+    <div class="trig"><b>trigger</b> Procedure Performed: COHAT</div>
+    <div class="cost">clinic visit</div></div></div>
+
+  <div class="phase">Phase A &middot; after the dental
+    <small>fires only if the COHAT happens</small></div>
+
+  <div class="row"><div class="day">day 0</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">post-op discharge</span></div>
+    <div class="why">Soft food, pain medication, what the extractions were, what to watch for.</div>
+    <div class="trig"><b>trigger</b> Procedure Completed: COHAT</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"how is Pobble eating, any mouth pain or pawing at his face? reply 1 to 3"</span></div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-giga">Giga</span><span class="what">answers the reply in chat</span></div>
+    <div class="why">A 1 or a 2 from the discharge. A 3 goes to the nurse.</div>
+    <div class="cost">$0.05</div></div></div>
+
+  <div class="row"><div class="day">day 4</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-advice</span>
+      <span class="cond">only if she replied 3</span></div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="row"><div class="day">day 5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-note">Note</span><span class="what">handwritten card from the technician</span>
+      <span class="cond">only if it was a hard visit for him</span></div>
+    <div class="why">Signed by the person who was with him. Nothing to click.</div>
+    <div class="cost">$2.75</div></div></div>
+
+  <div class="row"><div class="day">day 10</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">back to normal, plus the home dental plan</span></div>
+    <div class="why">Back to regular food, the home routine to slow re-accumulation, VOHC products, and a plain note on why the anaesthesia was worth it for a stage 3 mouth.</div>
+    <div class="trig"><b>trigger</b> 10 days post-COHAT</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="phase">Phase B &middot; appointment-keeping safety net
+    <small>the record shows two prior cancellations. The 28 Sep blood draw is load-bearing</small></div>
+
+  <div class="row"><div class="day">28 Sep<br>same day</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"we missed Pobble today, let's get his blood draw rebooked so his dental can move forward"</span>
+      <span class="cond">only on a cancellation or no-show</span></div>
+    <div class="why">Names the consequence: the dental cannot proceed without it, and <span class="q">Periodontal disease, AVDC stage 3</span> progresses while it waits. The record shows this owner has cancelled before, <span class="q">Sent SMS regarding cancellation appt</span> twice.</div>
+    <div class="trig"><b>trigger</b> Appointment Cancelled or No-show: PABW</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">30 Sep</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-agent">Support agent</span><span class="what">callback to rebook</span>
+      <span class="cond">only if still not rebooked after 2 days</span></div>
+    <div class="why">One call, human, to find a slot that works. Not a nag sequence.</div>
+    <div class="cost">$4.00</div></div></div>
+
+  <div class="phase">Phase C &middot; anxiety, the standing spine
+    <small>safety-framed, never marketing. This dog has a real drug-interaction history</small></div>
+
+  <div class="row"><div class="day">day 20</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the anxiety plan, in writing</span></div>
+    <div class="why">Confirm the current plan is fluoxetine on its own, and the hard rule from his record: never fluoxetine and trazodone together, because of the <span class="q">high suspicion of serotonin syndrome from concurrent administration.</span> Any new anxiety medication from any source, an ER, a boarding facility, a second vet, gets run past Petfolk first so the full list lives in one place.</div>
+    <div class="trig"><b>trigger</b> Anxiety on file + 20 days</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">when low</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">fluoxetine refill reminder</span></div>
+    <div class="why">Tied to the real prescription, one tap to refill.</div>
+    <div class="trig"><b>trigger</b> days_supply low</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 90,<br>180, 270</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">behaviour check-in</span></div>
+    <div class="why">Destructive behaviour when left alone, appetite, any return of house-soiling, how he is doing with Sindri. Reply path to the nurse.</div>
+    <div class="trig"><b>trigger</b> recurring</div>
+    <div class="cost">$0.015 each</div></div></div>
+
+  <div class="row"><div class="day">any</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">proactive check-in on a life event</span>
+      <span class="cond">only on a household change</span></div>
+    <div class="why">His anxiety and his house-soiling both tracked life events hard: <span class="q">The history of urinating in specific locations following significant life stressors (new dog, new house) is highly suggestive of a behavioral cause.</span> Another move, a new pet, or the loss of Sindri is a real trigger.</div>
+    <div class="trig"><b>trigger</b> household_change event</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="phase">Phase D &middot; atopy, dormant-watch
+    <small>currently quiet and off medication. No routine touches while quiet</small></div>
+
+  <div class="row"><div class="day">day 150<br>~Jan</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"any itching, paw licking, or belly redness? reply 1 to 3"</span></div>
+    <div class="why">The 2025 flare was a January one, and the oldest record lists seasonal allergies. A 2 or 3 opens the track.</div>
+    <div class="trig"><b>trigger</b> Atopy on file + seasonal window</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 152</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">the flare plan</span>
+      <span class="cond">a 2 gets home care, a 3 gets the nurse</span></div>
+    <div class="why">A flare is a real re-decision for this dog: <span class="q">Atopy, pruritic- no response to Cytopoint</span>, then Apoquel, then a prednisone taper. Not a refill.</div>
+    <div class="cost">$0.002 / $6.00</div></div></div>
+
+  <div class="phase">Phase E &middot; the recurring spine</div>
+
+  <div class="row"><div class="day">day 14</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">stool sample rider on the prep email</span></div>
+    <div class="why"><span class="q">Recommended fecal testing was deferred by the client to a future visit.</span> Ride the 28 Sep appointment rather than a separate ask.</div>
+    <div class="trig"><b>trigger</b> fecal overdue + appointment booked</div>
+    <div class="cost">$0</div></div></div>
+
+  <div class="row"><div class="day">day 60</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the cataracts</span></div>
+    <div class="why"><span class="q">he may be a good candidate for cataract surgery so that his vision improves significantly.</span> and the offer to <span class="q">refer him to Animal Eye Care</span>. Owner's call. Also practical: a low-vision senior does well with a stable home layout and routine. One email, no follow-up nagging.</div>
+    <div class="trig"><b>trigger</b> mature cataracts on file</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 45</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">PetfolkCare value, retrospective</span></div>
+    <div class="why">He is <span class="q">Currently a Member</span>, so this is "your plan is working": the wellness visit, bordetella, the heartworm test, and what the dental costs with membership.</div>
+    <div class="trig"><b>trigger</b> 45-day history + pfc member</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">~Mar<br>2027</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">rabies and DAPP reminder</span></div>
+    <div class="why"><span class="q">his Rabies and Distemper/Parvo vaccines are current</span> until 03/30/2027. Off the structured due date, not inferred. Sorted at a visit. <span class="q">The Leptospirosis vaccine was not administered.</span> and is not re-pushed after repeated declines.</div>
+    <div class="trig"><b>trigger</b> vaccine due, structured feed</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">month 12</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-push">Push</span><span class="what">annual wellness forward-book</span></div>
+    <div class="why">SMS fallback if there is no app engagement.</div>
+    <div class="trig"><b>trigger</b> 12 months + no future appointment</div>
+    <div class="cost">$0.001</div></div></div>
+
+  <div class="row"><div class="day">month 12<br>+ 2 wks</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-mail">Direct mail</span><span class="what">postcard to the address on file</span>
+      <span class="cond">only if no email, app or SMS engagement in 90 days</span></div>
+    <div class="why">The last channel that still works when the digital ones have gone quiet. One card. Unlikely, this owner uses email, SMS and virtual care heavily.</div>
+    <div class="cost">$0.85</div></div></div>
+
+  <div class="note">
+    <h3>What the record does not carry, and what we would ask Vetspire for</h3>
+    <p>Current medication status with a real active or inactive flag, the fluoxetine question is the clearest case in the whole set. Appointment Booked, Completed and Cancelled events, so the journey can react to the 28 Sep blood draw and to a cancellation the way this owner has cancelled before. Estimate Issued for the dental. Lab Result events for the blood work, to gate the dental on a real clearance. Fear score as a coded field over time. Problem-list entries with a status, so atopy reads as monitoring. Weight as a series. Referral Made events. Household links, since Sindri is in the same home and the two dogs' behaviour problems are entangled.</p>
+
+    <h3>Left out on purpose</h3>
+    <ul>
+      <li><b>Asserting a cardiac diagnosis.</b> The finding is soft, was confounded by tremor and a drug reaction, and the heart was <span class="q">Normal rate and rhythm. No murmurs or arrhythmias auscultated, pulses strong and synchronous.</span> on the calm exam. The journey raises the record's own question for the DVM and stops.</li>
+      <li><b>Pushing fluoxetine as marketing, or assuming its current status.</b> The journey surfaces the question and routes to a nurse.</li>
+      <li><b>A full behavioural-training program.</b> That is a vet or behaviourist referral. The journey supports it, it does not run it.</li>
+      <li><b>Working up the polydipsia flag directly.</b> The 28 Sep panel will speak to it.</li>
+    </ul>
+
+    <h3>Inconsistencies caught in the record</h3>
+    <ul>
+      <li>Breed is written three ways: <span class="q">Chihuahua</span> on the Petfolk header, "Chihuahua - Mixed" on one outside record, "Rat Terrier" on another. Used the header.</li>
+      <li>The family's move origin is given as both South Carolina and South Florida. The journey uses the pattern, not the origin.</li>
+      <li>"Toby" is used for Pobble in one intake's free text. No alternate or personal name is quoted. Keyed on Patient ID PT-306BA7.</li>
+      <li>The medication list shows fluoxetine active while the 30 Jul 2026 intake says <span class="q">no meds, just simparica trio</span>. Treated as an open question, not resolved by the journey.</li>
+      <li>The murmur and arrhythmia were heard twice in Sep 2024 (<span class="q">Heart murmur and heart arrythmia!</span>) under extreme tremor and an active drug reaction, and the heart was normal on the calm Jul 2026 exam.</li>
+    </ul>
+  </div>
+
+  <div class="money">
+    <div><b>$0.28</b><span>per year, unconditional. Heavy on SMS around the 28 Sep blood draw plus quarterly checks, about 10 emails, 1 push, 2 Giga chats.</span></div>
+    <div><b>$24</b><span>per year if every gate fires: three or four nurse calls, two agent calls, the handwritten note.</span></div>
+  </div>
+  <p style="font-size:12.5px;color:var(--scrubs);margin-top:0">A feral-rescue senior with a stalled stage 3 dental, a drug-interaction history, and an anxiety problem that gates the whole plan belongs near the top of the range. The $1.50 average describes neither number.</p>
+
+  <footer>Built from record z2:MRS. Every highlighted span is quoted verbatim and checked by string
+  match against the source. See <b>ground-rules.md</b> for the eleven constraints this journey follows,
+  <b>working/evidence/pobble.md</b> for every quoted span with its line number, and
+  <b>working/decisions-log.md</b> for the judgment calls behind it.</footer>
+
+</div>
+</body>
+</html>
