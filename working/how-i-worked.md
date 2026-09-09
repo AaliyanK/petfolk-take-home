@@ -41,3 +41,8 @@ Rough order:
 ## Where I made the call the model could not
 
 - (running list)
+
+## Method notes
+
+- **The source files wrap sentences across physical lines.** A phrase only survives a string match if it has no line break inside it. So the evidence files record the usable span, meaning the part that sits on a single line, and journeys never stitch two lines into one quote. The verification script checks against the raw text with newlines intact, which is the strict case. If Petfolk normalises whitespace before matching, we still pass. If they do not, we still pass.
+- Evidence first, then journey. Every pet-specific phrase in a journey traces to a line in `working/evidence/<pet>.md`, which traces to a line in the source. Aaliyan verifies the evidence file against the source before the journey is built.
