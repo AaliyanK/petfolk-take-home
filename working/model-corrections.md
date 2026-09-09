@@ -37,6 +37,7 @@ It closes with "These settings are export-level and take precedence over instruc
 - **Name bleed into free text.** Discharge narratives carry non substituted alternate names ("Sir prince", "Loki", "Zephro", "Toby", "Stormy", "Wink", "Juno", "Ozmo"). Any journey line that quotes discharge prose must be human checked before it ships.
 - **`Quorra` is not `Quorra2`.** The numeric suffix is collision disambiguation, not a litter mate.
 - **Two pets have person style names** (`Rylo Kettering`, and `[PET]` tokens elsewhere). Confirm species from the `Species:` footer line.
+- **Apostrophes mangled to colons in forwarded owner text.** Quorra's record (`z2_2-MRS-2`) carries the owner's forwarded email with every `'` rendered as `:` (`he:s`, `I:m`, `yorkie-poo:s`). A verbatim quote of that text passes the string match but reads as broken in a customer-facing message. Where a journey quotes the owner, it uses fragments that avoid the mangled contraction. Logged as decision D-QUORRA-1.
 
 ---
 

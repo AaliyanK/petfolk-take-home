@@ -46,6 +46,7 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 1: `working/evidence/quorra.md`. A 14y Yorkie new to Petfolk, coming in Jul 24 for a second opinion on three things at once: dental extractions under anaesthesia, a vaccine-vs-titer standoff blocking the anaesthesia, and a new bronchitis diagnosis from another vet. Section 9 (what is NOT in the record) is the important one. Data calls in section 8: mangled apostrophes in the owner email, breed written three ways, client-name reuse, the $99 to $135 quote correction.
 - Phase 2: `working/design/quorra.md`. Five tracks: A the consult and making it productive (records-request kickoff is the retention move), B the dental pathway (vaccine/titer touch is factual only, consent-respecting), C the bronchitis, D the senior labs, E the senior wellness spine. ~22 touches. Cost $0.18 unconditional / $21 if every gate fires.
 - Key design call: no vaccine marketing ever. The only vaccine communication is a factual anaesthesia-clearance + titer explainer, and only if the DVM's clearance requires the decision.
+- Process note: evidence and design were produced in one pass here, collapsing the usual "evidence, Aaliyan reviews, then design" gate. Reason was the thin record (the evidence largely dictates the design). Aaliyan flagged it and confirmed the calls. Restoring the review gate for Pobble and Quorra2, which are large records.
 
 ## Planned
 
