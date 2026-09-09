@@ -50,10 +50,15 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 3: `question-1/journeys/quorra.html`, cloned from the Ikko3 HTML. 5 phases, 24 rows, 32 verbatim spans, 8 gates.
 - Phase 4: `python working/scripts/verify_quotes.py question-1/journeys/quorra.html records/z2_2-MRS-2.txt`. Result: 32 spans, 12 raw / 20 whitespace-normalised / 0 misses. Tag depth balanced.
 
+## Session 6 — Q1a, Pobble (evidence only, review gate restored)
+
+- Read `records/z2_MRS.txt` end to end (6127 lines, 104 Petfolk pages + outside records). A single fecal table is duplicated across pages 57 to 82 (lines ~2560 to 4216), no content there.
+- Phase 1: `working/evidence/pobble.md`. Five live threads: anxiety (serotonin-syndrome history from concurrent fluoxetine + trazodone at the first visit), atopy (Cytopoint failed, switched to Apoquel, now quiet and off meds), AVDC stage 3 periodontal disease (the live thread, PABW booked Sept 28 2026), a soft cardiac finding (murmur + arrhythmia heard twice in Sep 2024 under tremor, normal on the calm Jul 2026 exam), and 2 years of declined senior bloodwork (last panel Sep 2024 showed mild ALT/AST elevation, never rechecked).
+- Central catch (evidence section 8 E): fluoxetine status is unclear. Med list shows it active (refilled Dec 2025, 3 refills), Jul 30 2026 intake says "no meds, just simparica trio". The vet's plan ties the stressful blood draw to "an effective anxiety management plan in place", and the PABW is now Sept 28. This is the journey's central branch.
+- Per Aaliyan's instruction, stopped at evidence. Design not started until he reviews.
+
 ## Planned
 
-- Aaliyan reviews `working/evidence/quorra.md` and `working/design/quorra.md`, then Phase 3 (HTML) + Phase 4 (verify).
-- Then Pobble (`z2_MRS`), Quorra2 (`dl_MRS-_1_`), same four phases each.
-- Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage, Q2 build memo.
-- `question-1/journeys/index.html`, PDF exports, README summary.
-- Q1b triage from `ingestion-log.md`. Q2 build memo from `how-i-build-a-journey.md`.
+- Aaliyan reviews `working/evidence/pobble.md` against the source and makes the calls, then I build the design (Phase 2), then HTML + verify.
+- Then Quorra2 (`dl_MRS-_1_`), the header-only stub.
+- Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.
