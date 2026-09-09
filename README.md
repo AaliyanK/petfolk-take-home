@@ -19,7 +19,6 @@ Start here, then go where you want.
 | `working/prompts.md` | The prompts that moved the work, in order |
 | `working/model-corrections.md` | Every place the model or the data was wrong, and what I did about it |
 | `working/` | Everything else: the record by record notes, my teardown of the Biscuit example, the scripts, the quoted spans behind every journey |
-| `VIDEO.md` | Link to a short walkthrough |
 
 ## The short version
 
