@@ -13,9 +13,10 @@ Everything used to produce the deliverable. Append as we go.
 
 ## Session 2 — fixing the gap
 
-- Caught that the ingestion log overstated coverage (had marked all 25 as fully read).
-- Reading the 3 large journey targets (`z2_MRS`, `z1_MRS-45`, `z2_16MRS-16`) in full before drafting.
-- Remaining 4 large files + rest of `dl_MRS-_4_` to be read in full before the triage table.
+- Caught that the ingestion log overstated coverage (had marked all 25 as fully read; 7 large files were grep-only and the Pobble row was missing entirely).
+- Read all 8 large files end to end: `z1_MRS-45` Ikko, `z2_16MRS-16` Ikko3, `z2_MRS` Pobble (the 3 journey targets), plus `z1_MRS-18` Pengo, `z1_MRS-32` Ikko2, `z1_MRS-46` Innox, `z2_28MRS-28` Rylo, and the rest of `dl_MRS-_4_` Pengo3.
+- Method for the big files: read every INTAKE / SUBJ / Presenting Concerns / VITALS / OBJECTIVE / ASSESSMENT / PLAN / DISCHARGE / decline / support-comm block in full; skimmed the repeated drug tables, repeated lab-result tables, and pure appointment-reminder boilerplate (no new info in those).
+- Rewrote every large-file summary in `ingestion-log.md` from the full read. Several were materially wrong before (e.g. Ikko's nail is a chronic bone fracture with an amputation decision, not just soft-tissue infection; Pobble's dental is finally moving via a Sep 28 PABW visit; Innox is intact; Rylo is mid-workup with a specialist GI panel).
 
 ## Planned
 
