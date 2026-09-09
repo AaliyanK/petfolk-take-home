@@ -40,9 +40,17 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 3: `question-1/journeys/ikko3.html`, cloned from the Ikko HTML. 6 phases, 30 rows, 63 verbatim spans, 7 conditional gates, all 10 pill types.
 - Phase 4: `python working/scripts/verify_quotes.py question-1/journeys/ikko3.html records/z2_16MRS-16.txt`. Result: 63 spans, 47 raw match, 16 match under whitespace normalisation, 0 misses. Tag balance clean (div 247/247, span 151/151).
 
+## Session 5 — Q1a, Quorra
+
+- Read `records/z2_2-MRS-2.txt` end to end. Thin record: 2 Petfolk pages (two Jul 23 2026 support notes + the owner's forwarded email) plus a 2 page outside lab panel from 7/1/2026. No Petfolk exam, no problem list, no vaccine history.
+- Phase 1: `working/evidence/quorra.md`. A 14y Yorkie new to Petfolk, coming in Jul 24 for a second opinion on three things at once: dental extractions under anaesthesia, a vaccine-vs-titer standoff blocking the anaesthesia, and a new bronchitis diagnosis from another vet. Section 9 (what is NOT in the record) is the important one. Data calls in section 8: mangled apostrophes in the owner email, breed written three ways, client-name reuse, the $99 to $135 quote correction.
+- Phase 2: `working/design/quorra.md`. Five tracks: A the consult and making it productive (records-request kickoff is the retention move), B the dental pathway (vaccine/titer touch is factual only, consent-respecting), C the bronchitis, D the senior labs, E the senior wellness spine. ~22 touches. Cost $0.18 unconditional / $21 if every gate fires.
+- Key design call: no vaccine marketing ever. The only vaccine communication is a factual anaesthesia-clearance + titer explainer, and only if the DVM's clearance requires the decision.
+
 ## Planned
 
-- Aaliyan verifies the Ikko3 spans against the source when he gets to it. Then Quorra (`z2_2-MRS-2`), Pobble (`z2_MRS`), Quorra2 (`dl_MRS-_1_`), same four phases each.
+- Aaliyan reviews `working/evidence/quorra.md` and `working/design/quorra.md`, then Phase 3 (HTML) + Phase 4 (verify).
+- Then Pobble (`z2_MRS`), Quorra2 (`dl_MRS-_1_`), same four phases each.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage, Q2 build memo.
 - `question-1/journeys/index.html`, PDF exports, README summary.
 - Q1b triage from `ingestion-log.md`. Q2 build memo from `how-i-build-a-journey.md`.

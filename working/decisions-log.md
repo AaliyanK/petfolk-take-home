@@ -55,6 +55,15 @@ For the standing rules and assumptions that apply to every journey, see `ground-
 | D-IKKO3-4 | Rabies due date appears three ways: free text `November 2026`, immunization table `Nov 11, 2026`, a booked staff reminder for `Aug 01, 2026`.                                                                                 | Do not fire "rabies overdue" off the text export. The journey may reference the booked Aug 1 and Nov 23 appointments because those are explicit appointment records. | Consistent with D-IKKO-2. Inferred dates are unsafe, booked appointments are facts.                                |
 | D-IKKO3-5 | Age given as `2.6 YO` (header), `1-year 11-month-old` (Dec 2025 notes), `1yr` (radiology). DOB as both `[MON] [DAY], 2024` and `1/1/2024`.                                                                                    | Low stakes. The journey never states an age. Use the header line verbatim only if a signalment chip needs it.                                                        | Matches the Biscuit format, which quotes the header signalment line as is.                                         |
 
+### Quorra (`z2_2-MRS-2`)
+
+| # | Conflict | Decision | Reasoning |
+| --- | --- | --- | --- |
+| D-QUORRA-1 | The owner's forwarded email has apostrophes rendered as colons: `he:s`, `I:m`, `yorkie-poo:s`. | Quote only fragments that avoid the mangled contraction (`He only has a few teeth left.`, `a second opinion on teeth, vaccine questions, and bronchitis.`). | The string match needs the colon form to pass, but a highlighted quote reading `he:s` looks broken in a customer-facing document. Noted in the footer. |
+| D-QUORRA-2 | Breed is `Yorkshire Terrier` (Petfolk header), `Mixed` (outside lab), `yorkie-poo` (owner). | Use the Petfolk header phrasing, describe him as a Yorkie cross in prose. | The journey does not hinge on breed. The Yorkie-cross predisposition to hyperlipidemia is worth one line in the lab explainer. |
+| D-QUORRA-3 | `Guthrie Pellow` is the client name here and on Ikko3 and other records, different households. | Key on Patient ID `PT-6A2B6A`, never the client name. | Standing rule O2. Quorra is a clean example. |
+| D-QUORRA-4 | Exam quoted at `$99`, then `$135` in the same support note. | Use `$135`. | The staff member corrected themselves in the same note. Not a real conflict, noted so a reviewer sees we read to the end. |
+
 ## Clinical calls (human in the loop)
 
 These are calls Aaliyan made or confirmed, not the model.
@@ -65,4 +74,8 @@ These are calls Aaliyan made or confirmed, not the model.
 | C-IKKO3-1                            | Ikko3 | Nothing anaesthetic (the dental, therefore the deferred wellness bloodwork) is offered until the pre-visit gabapentin problem is solved. The dental email is gated behind a YES/NO check on whether the owner can dose her. | in `working/design/ikko3.md` Track E  |
 | C-IKKO3-2                            | Ikko3 | The IBD question (`Ddx hairballs ... vs primary GI (IBD flare up)`) is not driven by a message. The journey surfaces it in Tracks C and D and gates escalation on owner interest and a symptom threshold.                   | in `working/design/ikko3.md`          |
 | C-IKKO3-3                            | Ikko3 | The pica track is a permanent low-cost safety net with an always-on urgent-routing rule, not a timed campaign, because the behaviour never resolves.                                                                        | in `working/design/ikko3.md` Track B  |
+| C-QUORRA-1 | Quorra | No vaccine marketing ever. The owner declined vaccines, so the only vaccine communication is a factual anaesthesia-clearance and titer explainer, and it only fires if the DVM's clearance requires the decision. Rule 10. | in `working/design/quorra.md` Track B |
+| C-QUORRA-2 | Quorra | The bronchitis cause is not stated by any message. The journey coordinates getting the outside records in and lets the DVM answer the "is it dental" question. | in `working/design/quorra.md` Track C |
+| C-QUORRA-3 | Quorra | The single highest-value action is importing the outside clinic's records (x-rays, bronchitis notes, meds) into the Vetspire chart. It is both a clinical prerequisite for anaesthesia and the main retention move for an owner comparing clinics. | in `working/design/quorra.md` Track A |
+| C-QUORRA-4 | Quorra | Membership status is unknown, so the PetfolkCare touch branches on the real status rather than assuming. | in `working/design/quorra.md` Track E |
 | _more added as journeys are drafted_ |       |                                                                                                                                                                                                                             |                                       |
