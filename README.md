@@ -11,6 +11,7 @@ Start here, then go where you want.
 
 | Folder | What's in it |
 |---|---|
+| `ground-rules.md` | The 11 constraints every journey follows and Q2 is built on. Read this first. |
 | `question-1/journeys/` | 12 month journeys for 5 pets, in the format of the Biscuit example (HTML + PDF) |
 | `question-1/triage.csv` | All 25 records, my call on each |
 | `question-1/triage.md` | One page on how to read the table and the patterns across the 25 |
