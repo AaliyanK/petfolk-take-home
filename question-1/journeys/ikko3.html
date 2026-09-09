@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ikko3's year &middot; journey from a medical record</title>
+<style>
+  :root{
+    --fur:#724333; --skin:#fef3e7; --scrubs:#64907f; --dark:#254d4f;
+    --sage:#b4c0a6; --coral:#e97657; --orange:#ef7c2e; --card:#fdf7ef;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--skin); color:var(--dark);
+    font-family:"Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.5;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:34px 26px 60px}
+
+  .mast{display:flex; align-items:baseline; gap:11px; margin-bottom:26px}
+  .mast .word{font-size:23px; font-weight:700; color:var(--fur); letter-spacing:-.01em}
+  .mast .tag{font-size:12.5px; color:var(--scrubs)}
+
+  h1{font-size:38px; line-height:1.06; color:var(--fur); font-weight:700; margin:0 0 8px; letter-spacing:-.015em}
+  .deck{font-size:14px; color:var(--scrubs); margin:0 0 26px; font-weight:600}
+
+  .patient{background:var(--card); border:1px solid var(--sage); border-radius:13px; padding:19px 21px; margin-bottom:20px}
+  .patient h2{font-size:19px; color:var(--fur); margin:0 0 13px; font-weight:700}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{border:1px solid var(--sage); border-radius:999px; padding:4px 12px; font-size:12.5px; color:var(--dark); background:#fff}
+
+  .demo{margin:0 0 20px; font-size:14.5px}
+  .demo b{color:var(--fur)}
+
+  .keyline{font-size:12px; color:var(--scrubs); margin:0 0 30px}
+  .keyline em{background:#fbeee0; font-style:italic; padding:0 2px; border-radius:2px}
+  .chip .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .phase{margin:34px 0 4px; padding-bottom:7px; border-bottom:2px solid var(--coral);
+         font-size:11.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--fur)}
+  .phase small{display:block; letter-spacing:.02em; text-transform:none; font-weight:600; color:var(--scrubs); margin-top:4px}
+
+  .row{display:grid; grid-template-columns:64px 22px 1fr; gap:0 10px; padding:13px 0 12px; align-items:start}
+  .day{font-size:12.5px; color:var(--scrubs); font-weight:600; text-align:right; padding-top:3px; white-space:nowrap}
+  .spine{position:relative; display:flex; justify-content:center; padding-top:7px}
+  .spine i{width:8px; height:8px; border-radius:50%; background:var(--scrubs); display:block; z-index:1}
+  .spine::before{content:""; position:absolute; top:0; bottom:-24px; width:1px; background:var(--sage)}
+  .row:last-of-type .spine::before{display:none}
+
+  .head{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+  .pill{font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+        padding:3px 9px; border-radius:5px; color:#fff; white-space:nowrap}
+  .p-sms{background:var(--orange)} .p-email{background:var(--scrubs)}
+  .p-push{background:var(--sage); color:var(--dark)} .p-visit{background:#fff; color:var(--fur); border:1.5px solid var(--fur)}
+  .p-sys{background:transparent; color:var(--scrubs); border:1px dashed var(--scrubs)}
+  .p-giga{background:#50aba6} .p-nurse{background:var(--dark)} .p-agent{background:var(--fur)}
+  .p-note{background:#bcb757; color:var(--dark)} .p-mail{background:var(--coral)}
+  .cond{font-size:10.5px; color:var(--coral); border:1px dashed var(--coral); border-radius:4px;
+        padding:2px 7px; white-space:nowrap; font-weight:600}
+  .cost{font-size:11.5px; color:var(--scrubs); margin-top:5px; font-variant-numeric:tabular-nums}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; margin:0 0 14px; font-size:11.5px; color:var(--dark)}
+  .legend span{display:flex; align-items:center; gap:6px}
+  .legend b{width:9px; height:9px; border-radius:3px; display:inline-block}
+  .what{font-size:15px; font-weight:650; color:var(--fur)}
+  .why{font-size:13.5px; color:var(--dark); margin-top:4px; opacity:.95}
+  .why .q{background:#fbeee0; padding:0 2px; border-radius:2px; font-style:italic}
+  .trig{font-size:12px; color:var(--scrubs); margin-top:5px; border-left:2px solid var(--sage); padding-left:8px}
+  .trig b{font-weight:600}
+
+  .note{background:var(--card); border-left:4px solid var(--scrubs); border-radius:0 9px 9px 0;
+        padding:17px 20px; margin:34px 0 22px; font-size:13.5px}
+  .note b{color:var(--fur)}
+  .note h3{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--fur); margin:16px 0 6px}
+  .note h3:first-child{margin-top:0}
+  .note ul{margin:6px 0; padding-left:18px}
+  .note li{margin:4px 0}
+  .note .q{background:#f4e6d6; padding:0 2px; border-radius:2px; font-style:italic}
+
+  .money{display:flex; flex-wrap:wrap; gap:24px; margin:22px 0 8px}
+  .money div{font-size:13px}
+  .money b{display:block; font-size:22px; color:var(--fur); font-variant-numeric:tabular-nums}
+  .money span{color:var(--scrubs)}
+
+  footer{margin-top:30px; padding-top:18px; border-top:1px solid var(--sage); font-size:12.5px; color:var(--scrubs)}
+
+  @media print{ body{background:#fff} .wrap{padding:0} .phase{page-break-after:avoid} .row{page-break-inside:avoid} .note{page-break-inside:avoid} }
+  @media (max-width:560px){ .row{grid-template-columns:52px 18px 1fr} h1{font-size:29px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast"><span class="word">petfolk</span><span class="tag">primary and urgent veterinary care</span></div>
+
+  <h1>ikko3's year</h1>
+  <p class="deck">journey built from record z2:16MRS-16 &middot; one cat, twelve months</p>
+
+  <div class="patient">
+    <h2>Ikko3 &middot; 2.6y spayed female Persian Mix &middot; indoor only &middot; Atlanta</h2>
+    <div class="chips">
+      <span class="chip"><span class="q">Currently a Member</span>, not insured</span>
+      <span class="chip"><span class="q">Ikko3 is an indoor-only cat.</span> <span class="q">a domestic longhair cat</span></span>
+      <span class="chip"><span class="q">Pica - Dec 02, 2025</span>, <span class="q">Likes chewing on plants and xmas decorations</span></span>
+      <span class="chip"><span class="q">Acute vomiting - Dec 02, 2025</span>, <span class="q">Vomits approximately 2 times per week</span></span>
+      <span class="chip"><span class="q">chronic intermittent loose stools - Dec 02, 2025</span></span>
+      <span class="chip"><span class="q">Dental plaque formation - Nov 11, 2025</span>, <span class="q">Grade 1/4 dental tartar</span></span>
+      <span class="chip"><span class="q">Scared and typically does not cooperate</span>, <span class="q">Gabapentin 100mg: Dispensed for pre-visit sedation.</span></span>
+      <span class="chip">new 8-week Golden Retriever puppy in the house</span>
+      <span class="chip">rabies due Nov 2026</span>
+    </div>
+  </div>
+
+  <p class="demo"><b>What this is:</b> twelve months of communication for one indoor cat with no headline
+  diagnosis but a stubborn problem list. She eats non-food items and has two foreign-body visits on
+  record. She vomits hairballs on a chronic basis. Her loose stools were flagged for a workup that
+  never happened. Her routine bloodwork is on hold until she is under anaesthesia for a dental. She is
+  more frightened at the vet each visit, and the sedation drug meant to fix that is one the owner
+  cannot get into her. A new puppy just moved in and the owner thinks she is losing weight over it.</p>
+
+  <p class="keyline"><em>Highlighted italic text</em> is quoted word for word from Ikko3's record.
+  Everything else describes what the message does. Day 0 is the virtual care call on 21 Jul 2026.</p>
+
+  <div class="legend">
+    <span><b style="background:#ef7c2e"></b>SMS</span>
+    <span><b style="background:#64907f"></b>Email</span>
+    <span><b style="background:#b4c0a6"></b>Push</span>
+    <span><b style="background:#50aba6"></b>Giga, AI chat</span>
+    <span><b style="background:#724333"></b>Support agent, human</span>
+    <span><b style="background:#254d4f"></b>Tele-advice nurse</span>
+    <span><b style="background:#bcb757"></b>Handwritten note</span>
+    <span><b style="background:#e97657"></b>Direct mail</span>
+  </div>
+
+  <div class="phase">Phase A &middot; the weight call and the recheck
+    <small>the anchor. A virtual call about possible weight loss, an in-person recheck booked off it</small></div>
+
+  <div class="row"><div class="day">day 0</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-visit">Virtual care</span><span class="what">call logged, weight recheck booked</span></div>
+    <div class="why">The owner thinks Ikko3 is lighter since <span class="q">a new puppy was introduced into the home approximately one month ago.</span> The advice on the call: <span class="q">Advised that cats may take several months to adjust to a new pet in the home and that subtle weight changes should still be evaluated, as cats can hide signs of illness.</span> An exam was booked <span class="q">on Friday at 12:00 PM for evaluation of possible weight loss.</span></div>
+    <div class="trig"><b>trigger</b> Med Update Logged + Appointment Booked: weight recheck</div>
+    <div class="cost">clinic</div></div></div>
+
+  <div class="row"><div class="day">day 0, eve</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">recheck confirmation, and what to bring</span></div>
+    <div class="why">Confirms the booked time. Asks the owner to bring a fresh stool sample, because the loose stools are on the problem list and the record twice notes <span class="q">a fecal sample was not brought to the appointment.</span> One visit, two problems. Carries the pre-visit sedation plan, which is the subject of Phase E.</div>
+    <div class="trig"><b>trigger</b> Appointment Booked</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 3</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">weight recheck happens</span></div>
+    <div class="why">Branches on the finding: weight stable, or weight down.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed: recheck</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="row"><div class="day">day 4</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the result, in plain terms</span></div>
+    <div class="why">If weight is stable, the message quotes the <span class="q">Advised that cats may take several months to adjust to a new pet in the home and that subtle weight changes should still be evaluated, as cats can hide signs of illness.</span> line and says what would change the picture. If weight is down, it points to the vet's next step and invents no numbers. No automated message names a diagnosis.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed + weight_status</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 4</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"how is Ikko3 settling with the puppy? reply 1 to 3"</span></div>
+    <div class="why">1 is eating and using the litter box normally. 2 is eating less or hiding more. 3 is not eating, vomiting, or not using the box. Cats hide illness, so this is a real check, not a courtesy.</div>
+    <div class="trig"><b>trigger</b> Encounter Completed + household_change</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 4</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-giga">Giga</span><span class="what">answers the reply in chat</span></div>
+    <div class="why">A 1 or a 2 is handled from the visit notes and the "adjust over months" framing. A 3 goes to the nurse.</div>
+    <div class="cost">$0.05</div></div></div>
+
+  <div class="row"><div class="day">day 5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-note">Note</span><span class="what">handwritten card from the technician who weighed her</span>
+      <span class="cond">only if she came in and weight was a real concern</span></div>
+    <div class="why">Signed by the person who saw her, naming what they noticed. Nothing to click, nothing to buy.</div>
+    <div class="cost">$2.75</div></div></div>
+
+  <div class="row"><div class="day">day 6</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-advice call</span>
+      <span class="cond">only if she replied 3</span></div>
+    <div class="why">A licensed veterinary nurse, because this is clinical. She can see the weight trend, the GI history and the pica history, and she can rebook.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="phase">Phase B &middot; pica and foreign body, the safety net
+    <small>enters on the problem list, never exits. The behaviour does not resolve, so the track is permanent and cheap</small></div>
+
+  <div class="row"><div class="day">day 10</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the linear-item safety brief</span></div>
+    <div class="why">The single most important instruction in her record: <span class="q">The owner was explicitly warned NOT to pull on a string if it is ever seen protruding from the rectum</span>. Why it matters, in the vet's words: <span class="q">A detailed discussion was had regarding the risks of linear foreign bodies, including the potential for them to anchor and cause the intestines to bunch up (plication), which is a surgical emergency.</span> The home fix: <span class="q">It was recommended to remove access to all linear items, including ribbons, strings, hair ties, and wand toys</span>. A puppy in the house means new chew toys and gift wrap around.</div>
+    <div class="trig"><b>trigger</b> Pica on file + household_change</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">early Dec<br>day ~330</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">holiday decorations warning</span></div>
+    <div class="why">She has a December foreign-body history, <span class="q">chewing on plastic garland</span>, and the problem list reads <span class="q">Likes chewing on plants and xmas decorations</span>. Tinsel, ribbon, garland, fake plants. What ingestion looks like, and when to call versus go straight to the ER. Followed by a short email with the same content.</div>
+    <div class="trig"><b>trigger</b> Pica on file + seasonal window</div>
+    <div class="cost">$0.015 + $0.002</div></div></div>
+
+  <div class="row"><div class="day">any time</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-giga">Giga</span><span class="what">urgent-symptom routing</span>
+      <span class="cond">always on</span></div>
+    <div class="why">If a chat or a reply pairs vomiting or retching with a known chew exposure, Giga routes straight to the nurse and the urgent-visit path. It does not try to triage a possible obstruction itself.</div>
+    <div class="trig"><b>trigger</b> inbound + symptom + exposure match</div>
+    <div class="cost">$0.05, then $6.00 if escalated</div></div></div>
+
+  <div class="phase">Phase C &middot; hairballs
+    <small>chronic, driven by the long coat. Adherence touch waits past the anchor week</small></div>
+
+  <div class="row"><div class="day">day 20</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the hairball plan, confirm the tools she has</span></div>
+    <div class="why">The vet's plan, quoted: <span class="q">Recommended starting Laxatone to help manage hairballs by lubricating the gastrointestinal tract.</span>, <span class="q">Give 0.5 to 1 teaspoon initially to help clear any existing accumulation.</span>, and a delivery trick for a cat that refuses things, <span class="q">place a small dab on her paw, which encourages her to lick it off.</span> with the caution <span class="q">Please be mindful that giving too much can cause diarrhea.</span> Also on file: <span class="q">Discussed using a slow-feeder bowl</span> and <span class="q">REC getting a water fountain to encourage drinking more often.</span> The baseline to hold against is <span class="q">Vomits approximately 2 times per week</span>. Grooming line: <span class="q">Recurrent matting occurs on the back legs.</span> and <span class="q">Patient is resistant to being brushed on her belly and back legs.</span>, so a sanitary trim can ride along on the dental in Phase E.</div>
+    <div class="trig"><b>trigger</b> Vomiting on file</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 150</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"how many times a week is Ikko3 bringing up hairballs? reply with a number"</span></div>
+    <div class="why">A number well above her baseline of 2, or one paired with weight or appetite change, is the signal for the question the record keeps raising: <span class="q">Ddx hairballs and gastritis vs FB vs primary GI (IBD flare up) > metabolic</span>.</div>
+    <div class="trig"><b>trigger</b> Vomiting on file</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 152</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">tele-advice</span>
+      <span class="cond">only if the number is well above baseline or paired with weight loss</span></div>
+    <div class="why">The real re-decision point between a hairball problem and an IBD workup. A nurse call, not an automated message, because it is a clinical judgement.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="phase">Phase D &middot; the loose stools nobody finished
+    <small>the clinic flagged a workup and never came back to it. Owner-interest gated</small></div>
+
+  <div class="row"><div class="day">day 40</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">name the loose stools, offer to pick it back up</span></div>
+    <div class="why"><span class="q">The owner reports a chronic history of intermittent loose stools</span>. The visible cost at home: <span class="q">having to trim matted fur from the perineal area due to episodes of loose stool.</span> The open question: <span class="q">Underlying intestinal disease like IBD possible.</span> The clinic's own words were that <span class="q">this is something that we can discuss in more detail at a future visit</span>, and it never happened. The ask: a fecal and a diet conversation at the next visit, sample in hand this time.</div>
+    <div class="trig"><b>trigger</b> Loose stools on file + no workup event</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 44</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"want us to look into Ikko3's loose stools at her next visit? reply YES and we'll add it to her chart"</span></div>
+    <div class="why">A YES sets a care flag on the next encounter so the vet raises it. No YES and it waits for the annual, rather than nagging.</div>
+    <div class="trig"><b>trigger</b> prior email delivered</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="phase">Phase E &middot; the fear gap, then the dental
+    <small>the dental touch is gated behind fixing the pre-visit sedation. Nothing anaesthetic is offered until the owner can dose her</small></div>
+
+  <div class="row"><div class="day">day 7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the pre-visit sedation fix</span></div>
+    <div class="why">Name the problem: the drug is on the shelf and the owner <span class="q">reports difficulty administering this medication</span>, the cat finds it in her food and <span class="q">refuses to consume it.</span> Options: open the capsule into a strong wet food or a Churu, the timing is <span class="q">the night before and 2 hours prior</span>, and if that still fails, a short vet visit for a different route or a combination. The vet wants this solved: <span class="q">For future visits, pre-medication with gabapentin is strongly recommended.</span></div>
+    <div class="trig"><b>trigger</b> FAS flag + Rx gabapentin dispensed</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 9</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">"were you able to get the gabapentin into her last time? reply YES or NO"</span></div>
+    <div class="why">A NO routes to Giga, then the nurse. This gate is what everything anaesthetic waits on. Her fear is real: at the November visit <span class="q">The patient became very fearful, anxious, and aggressive during the examination.</span> and <span class="q">She refused treats. She became aggressive after smelling the Churu treat.</span></div>
+    <div class="trig"><b>trigger</b> prior email delivered</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 11</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-nurse">Nurse</span><span class="what">short tele-call</span>
+      <span class="cond">only if she replied NO</span></div>
+    <div class="why">Work out a dosing route that actually lands before any sedated procedure is booked.</div>
+    <div class="cost">$6.00</div></div></div>
+
+  <div class="row"><div class="day">day 95</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">the dental cleaning, why it clears three things at once</span></div>
+    <div class="why"><span class="q">Dental plaque formation - Nov 11, 2025</span> plus <span class="q">Grade 1/4 dental tartar</span>, and the labs are waiting on it: <span class="q">Recommended routine wellness lab work</span> was <span class="q">deferred until a future anesthetic procedure, such as a dental cleaning</span>. One anaesthetic event does the cleaning, the baseline bloodwork and the sanitary trim. It needs her premedicated, which is why this lands after the sedation fix. In the meantime, <span class="q">We recommend looking into products from the Veterinary Oral Health Council (VOHC) to help manage tartar at home.</span> and <span class="q">This can include special diets, treats, or water additives.</span></div>
+    <div class="trig"><b>trigger</b> Dental finding on file + sedation_plan resolved</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">day 109</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-agent">Support agent</span><span class="what">call about the dental estimate</span>
+      <span class="cond">only if an estimate was opened and not booked</span></div>
+    <div class="why">A human, not a clinical one. Cost, scheduling, and the PetfolkCare coverage on a dental. Anything clinical goes to the nurse queue.</div>
+    <div class="cost">$4.00</div></div></div>
+
+  <div class="phase">Phase F &middot; the recurring spine</div>
+
+  <div class="row"><div class="day">day 5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">puppy introduction and the flea plan</span></div>
+    <div class="why"><span class="q">The main health risk between them would be fleas, which the Revolution Plus will cover for Ikko3.</span> <span class="q">We recommend supervising their interactions closely, especially at first.</span> <span class="q">Make sure the puppy doesn't chase or overwhelm Ikko3,</span> and <span class="q">give them separate spaces to retreat to.</span> One question back: is the puppy on prevention too, so the household is covered. <span class="q">The potential for interactions and the risk of flea transmission were discussed.</span></div>
+    <div class="trig"><b>trigger</b> household_change + Rx Revolution active</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">~Nov 2026</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">Revolution Plus reorder</span></div>
+    <div class="why">She got a six-month supply in June 2026, so the reorder prompt lands around November. One tap to refill.</div>
+    <div class="trig"><b>trigger</b> days_supply low</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">day 30</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">PetfolkCare value, retrospective</span></div>
+    <div class="why">She is <span class="q">Currently a Member</span>, so this is confirmation the plan is working, not a pitch. Her June visit and the Revolution supply, and what the membership covered.</div>
+    <div class="trig"><b>trigger</b> 30-day history + pfc_status: member</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">Aug 1</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sys">System</span><span class="what">the forward-booked rabies reminder fires</span></div>
+    <div class="why">Already in the record as <span class="q">Dr. L. Marchetti rabies vx reminder</span> for <span class="q">Aug 01, 2026</span>. The journey rides the existing booking, it does not invent a date.</div>
+    <div class="trig"><b>trigger</b> Appointment reminder, existing</div>
+    <div class="cost">&mdash;</div></div></div>
+
+  <div class="row"><div class="day">Nov 16<br>annual &minus;7</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">confirm the forward-booked wellness on <span class="q">Nov 23, 2026</span></span></div>
+    <div class="why">Existing spine. The journey leaves the booking in place.</div>
+    <div class="trig"><b>trigger</b> Appointment reminder, existing</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">Nov 18<br>annual &minus;5</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-email">Email</span><span class="what">fear-free pre-visit for the annual</span></div>
+    <div class="why">She is <span class="q">Scared and typically does not cooperate</span> and the record shows why: <span class="q">The patient became very fearful, anxious, and aggressive during the examination.</span> Carries the gabapentin plan from Phase E. Rabies gets sorted in person at this visit.</div>
+    <div class="trig"><b>trigger</b> Appointment: annual + FAS flag</div>
+    <div class="cost">$0.002</div></div></div>
+
+  <div class="row"><div class="day">Nov 21<br>annual &minus;2</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-sms">SMS</span><span class="what">gabapentin timing reminder</span></div>
+    <div class="why">Give it <span class="q">the night before and 2 hours prior</span>.</div>
+    <div class="cost">$0.015</div></div></div>
+
+  <div class="row"><div class="day">month 12</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-push">Push</span><span class="what">forward-book next year's wellness</span></div>
+    <div class="why">SMS fallback if there is no app engagement.</div>
+    <div class="trig"><b>trigger</b> 12 months since annual + no future appointment</div>
+    <div class="cost">$0.001</div></div></div>
+
+  <div class="row"><div class="day">month 12<br>+ 2 wks</div><div class="spine"><i></i></div><div>
+    <div class="head"><span class="pill p-mail">Direct mail</span><span class="what">postcard to the address on file</span>
+      <span class="cond">only if no email, app or SMS engagement in 90 days</span></div>
+    <div class="why">The last channel that still works when the digital ones have gone quiet. One card, not a series. Unlikely for this owner, who uses virtual care.</div>
+    <div class="cost">$0.85</div></div></div>
+
+  <div class="note">
+    <h3>What the record does not carry, and what we would ask Vetspire for</h3>
+    <p>This journey leans on events and fields the text export does not expose: Appointment Booked and Appointment Completed, structured vaccine records with a current-record flag and a real next-due date, weight as a time series, body condition and fear score as coded fields over time, prescription dispensed versus filled versus refill-requested, problem-list entries with a status, household links, and message engagement.</p>
+
+    <h3>Left out on purpose</h3>
+    <ul>
+      <li><b>Household flea and parasite coordination with the puppy.</b> The data does not link the household, so this is a question in Phase F, not an action.</li>
+      <li><b>The transitional S1 vertebra.</b> A benign incidental finding on the December radiographs that <span class="q">should not create any</span> issues. Noted here so a reviewer knows we read the report and chose not to act on it.</li>
+      <li><b>A full IBD workup as its own track.</b> That is a vet-led clinical decision. The journey surfaces the question in Phases C and D and gates on owner interest, it does not drive a diagnosis.</li>
+    </ul>
+
+    <h3>Inconsistencies caught in the record</h3>
+    <ul>
+      <li>The client is written three ways: <span class="q">Guthrie Pellow</span> on the header, Guthrie Emery Yancey in the attached history, and Emery Yancey is also a Petfolk technician who signs notes in the same file. The pet is written "Ikko3 Emery Yancey" eight times. No personal name is quoted anywhere in this journey, and the patient is keyed on ID PT-E3BF8D.</li>
+      <li>A second pet name, Stormy, is used for Ikko3 on the 21 July call, carrying a weight figure. Not quoted. The weight story uses the dated exam weights instead.</li>
+      <li>The rabies due date appears as free text "November 2026", as a table entry "Nov 11, 2026", and as a booked reminder for <span class="q">Aug 01, 2026</span>. No overdue message fires off the export. The booked reminder and the November visit handle it in person.</li>
+      <li>Two clinic locations appear. Every 2026 encounter and both forward bookings are at the same one, so that is treated as her home clinic.</li>
+    </ul>
+  </div>
+
+  <div class="money">
+    <div><b>$0.22</b><span>per year, unconditional. About 6 SMS plus the reorder SMS, 11 emails, 1 push, 2 Giga chats.</span></div>
+    <div><b>$13.60</b><span>per year if every gate fires: two nurse calls, one agent call, the handwritten note, the postcard.</span></div>
+  </div>
+  <p style="font-size:12.5px;color:var(--scrubs);margin-top:0">The spread is the point again. A cat with a solvable but stalled care plan sits mid-range. The $1.50 average describes neither number.</p>
+
+  <footer>Built from record z2:16MRS-16. Every highlighted span is quoted verbatim and checked by string
+  match against the source. See <b>ground-rules.md</b> for the eleven constraints this journey follows,
+  <b>working/evidence/ikko3.md</b> for every quoted span with its line number, and
+  <b>working/decisions-log.md</b> for the judgment calls behind it.</footer>
+
+</div>
+</body>
+</html>

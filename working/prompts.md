@@ -37,8 +37,12 @@ Everything used to produce the deliverable. Append as we go.
 - Built `working/decisions-log.md`: one consolidated trail of method / open-brief / data-conflict / clinical calls, each with reasoning and repo location. Added the Ikko3 name bleed as a concrete "caught the model" example (`model-corrections.md` #5).
 - Phase 2: `working/design/ikko3.md`. Six tracks: A weight call and recheck (anchor), B pica safety net (permanent, low cost), C hairballs, D the unfinished loose-stool workup, E the FAS gap then the dental (dental gated behind the gabapentin fix), F fleas and the puppy and the preventive spine. About 21 touches. Cost $0.22 unconditional / $13.60 if every gate fires.
 
+- Phase 3: `question-1/journeys/ikko3.html`, cloned from the Ikko HTML. 6 phases, 30 rows, 63 verbatim spans, 7 conditional gates, all 10 pill types.
+- Phase 4: `python working/scripts/verify_quotes.py question-1/journeys/ikko3.html records/z2_16MRS-16.txt`. Result: 63 spans, 47 raw match, 16 match under whitespace normalisation, 0 misses. Tag balance clean (div 247/247, span 151/151).
+
 ## Planned
 
-- Aaliyan reviews `working/design/ikko3.md`, then Phase 3 (HTML) and Phase 4 (verify). Then Quorra, Pobble, Quorra2, same four phases.
+- Aaliyan verifies the Ikko3 spans against the source when he gets to it. Then Quorra (`z2_2-MRS-2`), Pobble (`z2_MRS`), Quorra2 (`dl_MRS-_1_`), same four phases each.
+- Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage, Q2 build memo.
 - `question-1/journeys/index.html`, PDF exports, README summary.
 - Q1b triage from `ingestion-log.md`. Q2 build memo from `how-i-build-a-journey.md`.
