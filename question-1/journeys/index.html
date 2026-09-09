@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>question 1 &middot; five lifecycle journeys from medical records</title>
+<style>
+  :root{
+    --fur:#724333; --skin:#fef3e7; --scrubs:#64907f; --dark:#254d4f;
+    --sage:#b4c0a6; --coral:#e97657; --orange:#ef7c2e; --card:#fdf7ef;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--skin); color:var(--dark);
+    font-family:"Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.5;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:34px 26px 60px}
+
+  .mast{display:flex; align-items:baseline; gap:11px; margin-bottom:26px}
+  .mast .word{font-size:23px; font-weight:700; color:var(--fur); letter-spacing:-.01em}
+  .mast .tag{font-size:12.5px; color:var(--scrubs)}
+
+  h1{font-size:38px; line-height:1.06; color:var(--fur); font-weight:700; margin:0 0 8px; letter-spacing:-.015em}
+  .deck{font-size:14px; color:var(--scrubs); margin:0 0 26px; font-weight:600}
+
+  p{margin:0 0 14px}
+  .lead{font-size:15px}
+  .lead b{color:var(--fur)}
+  a{color:#3f7d6e}
+
+  .keyline{font-size:12.5px; color:var(--scrubs); background:var(--card); border:1px solid var(--sage);
+           border-radius:10px; padding:13px 16px; margin:0 0 28px}
+  .keyline em{background:#fbeee0; font-style:italic; padding:0 2px; border-radius:2px}
+
+  .sec{margin:34px 0 6px; padding-bottom:7px; border-bottom:2px solid var(--coral);
+       font-size:11.5px; font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:var(--fur)}
+
+  .cards{display:grid; grid-template-columns:1fr; gap:14px; margin:16px 0 8px}
+  .pcard{background:var(--card); border:1px solid var(--sage); border-radius:13px; padding:18px 20px}
+  .pcard .top{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:4px}
+  .pcard h3{font-size:18px; color:var(--fur); margin:0; font-weight:700}
+  .pcard h3 a{text-decoration:none; color:var(--fur)}
+  .pcard h3 a:hover{text-decoration:underline}
+  .pcard .rec{font-size:11.5px; color:var(--scrubs); font-variant-numeric:tabular-nums; white-space:nowrap}
+  .pcard .sig{font-size:12.5px; color:var(--scrubs); font-weight:600; margin-bottom:8px}
+  .pcard p{font-size:13.5px; margin:0 0 10px}
+  .pcard .meta{display:flex; flex-wrap:wrap; gap:6px 16px; font-size:11.5px; color:var(--scrubs)}
+  .pcard .meta b{color:var(--dark); font-weight:600}
+  .pcard .open{font-size:12.5px; font-weight:700}
+
+  table{border-collapse:collapse; width:100%; font-size:13px; margin:10px 0 6px}
+  th,td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--sage); vertical-align:top}
+  th{font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--fur)}
+  td.n{font-variant-numeric:tabular-nums; white-space:nowrap}
+
+  .note{background:var(--card); border-left:4px solid var(--scrubs); border-radius:0 9px 9px 0;
+        padding:16px 20px; margin:22px 0; font-size:13px}
+  .note b{color:var(--fur)}
+
+  footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--sage); font-size:12.5px; color:var(--scrubs)}
+
+  @media (max-width:560px){ h1{font-size:29px} .pcard .top{gap:4px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast"><span class="word">petfolk</span><span class="tag">primary and urgent veterinary care</span></div>
+
+  <h1>question 1</h1>
+  <p class="deck">what lifecycle communication should we send these customers</p>
+
+  <p class="lead">The brief asks two things of Question 1. <b>Q1a</b>, write the full 12 month journey for
+  five specific records, in the format of the Biscuit example. <b>Q1b</b>, go through all 25 records and
+  give a one or two line call on each. This page is the map to Q1a. The five journeys are below. The
+  25 record triage is in <a href="../triage.md">question-1/triage.md</a>.</p>
+
+  <p class="lead">Every journey follows the eleven constraints in <a href="../../ground-rules.md">ground-rules.md</a>,
+  read that first. The method that produced each one is in
+  <a href="../../working/how-i-build-a-journey.md">working/how-i-build-a-journey.md</a>. Every judgment call,
+  per pet, is in <a href="../../working/decisions-log.md">working/decisions-log.md</a>.</p>
+
+  <p class="keyline">In every journey, <em>highlighted italic text</em> is quoted word for word from that
+  pet's record. Everything else describes what the message does or why. Petfolk verifies pet facts by
+  string match, so a script re-checks every quoted span in the built HTML against the source file.
+  Across the five journeys that is <b>193 quoted spans, zero misses</b>. The script is
+  <a href="../../working/scripts/verify_quotes.py">working/scripts/verify_quotes.py</a>, the span lists
+  are in <a href="../../working/evidence/">working/evidence/</a>.</p>
+
+  <div class="sec">The five journeys</div>
+
+  <div class="cards">
+
+    <div class="pcard">
+      <div class="top"><h3><a href="ikko.html">Ikko&nbsp;&rsaquo;</a></h3><span class="rec">z1:MRS-45</span></div>
+      <div class="sig">7y spayed female Basset Hound Mix &middot; Huntersville, NC</div>
+      <p>A visit booked to recheck a toenail turned out to be a chronic, displaced bone fracture of a
+      weight bearing toe, with amputation on the table. That sits on top of a chronic skin allergy on
+      daily Apoquel and a weight the vet has been chasing since last autumn. The journey runs the acute
+      nail decision as a safety net with real escalation, and holds the weight track back until the paw
+      settles so a weigh in pitch does not collide with "no walks".</p>
+      <div class="meta"><span><b>6 phases</b>, ~20 touches</span><span>cost <b>$0.24</b> quiet / <b>$19.80</b> if every gate fires</span><span>evidence: <a href="../../working/evidence/ikko.md">ikko.md</a></span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="top"><h3><a href="ikko3.html">Ikko3&nbsp;&rsaquo;</a></h3><span class="rec">z2:16MRS-16</span></div>
+      <div class="sig">2.6y spayed female Persian Mix cat &middot; Atlanta, GA</div>
+      <p>A structurally healthy cat with a stubborn problem list: eats non food items with two foreign
+      body events on record, chronic hairball vomiting, chronic loose stools the clinic flagged and
+      never worked up, early dental plaque with the wellness bloodwork deferred until a dental cleaning,
+      and rising fear at the vet with a sedation drug the owner cannot get into her. Plus a new puppy in
+      the house and a weight loss worry. The dental email is gated behind fixing the sedation problem.</p>
+      <div class="meta"><span><b>6 phases</b>, ~21 touches</span><span>cost <b>$0.22</b> quiet / <b>$13.60</b> if every gate fires</span><span>evidence: <a href="../../working/evidence/ikko3.md">ikko3.md</a></span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="top"><h3><a href="quorra.html">Quorra&nbsp;&rsaquo;</a></h3><span class="rec">z2:2-MRS-2</span></div>
+      <div class="sig">14y neutered male Yorkshire Terrier &middot; Cypress, TX</div>
+      <p>New to Petfolk. The owner emailed the day before a second opinion consult that covers three
+      things at once: dental extractions under anaesthesia, a vaccine versus titer standoff blocking that
+      anaesthesia, and a new bronchitis diagnosis from another vet. Petfolk has almost nothing on file,
+      so the journey is a new client onboarding plus a senior workup plus a consent conversation, and its
+      main job is to be coordinated enough that an owner comparing clinics stays. No vaccine marketing,
+      the vaccine touch is a factual titer explainer only.</p>
+      <div class="meta"><span><b>5 phases</b>, ~22 touches</span><span>cost <b>$0.18</b> quiet / <b>$21</b> if every gate fires</span><span>evidence: <a href="../../working/evidence/quorra.md">quorra.md</a></span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="top"><h3><a href="pobble.html">Pobble&nbsp;&rsaquo;</a></h3><span class="rec">z2:MRS</span></div>
+      <div class="sig">8y neutered male Chihuahua &middot; Wake Forest, NC</div>
+      <p>A feral rescue with a stacked history: anxiety severe enough to destroy a wall, a serotonin
+      syndrome scare from being put on two anxiety drugs at once, an atopy flare that beat Cytopoint, and
+      now stage 3 periodontal disease. A pre anaesthetic blood draw is already booked for 28 September.
+      That one appointment clears the dental and breaks a two year bloodwork logjam. The whole journey is
+      built around getting him there in good shape, and the anxiety medication question gates the entire
+      dental timeline.</p>
+      <div class="meta"><span><b>6 phases</b>, ~24 touches</span><span>cost <b>$0.28</b> quiet / <b>$24</b> if every gate fires</span><span>evidence: <a href="../../working/evidence/pobble.md">pobble.md</a></span></div>
+    </div>
+
+    <div class="pcard">
+      <div class="top"><h3><a href="quorra2.html">Quorra2&nbsp;&rsaquo;</a></h3><span class="rec">dl:MRS-(1)</span></div>
+      <div class="sig">6y spayed female domestic short hair cat &middot; Frisco, TX</div>
+      <p>The empty record. The whole file is a one page header, no visit ever. The planted directive in
+      the batch index wants this filed as a healthy wellness patient. It is not, it is a cat Petfolk has
+      never examined. The honest journey says that plainly, invites her in for a first exam, explains why
+      a baseline at age 6 is worth it, and onboards the owner. No clinical claims anywhere. It exits the
+      moment she is seen.</p>
+      <div class="meta"><span><b>3 phases</b>, ~11 touches</span><span>cost <b>$0.06</b> quiet / <b>$1.85</b> if every gate fires</span><span>evidence: <a href="../../working/evidence/quorra2.md">quorra2.md</a></span></div>
+    </div>
+
+  </div>
+
+  <div class="sec">Why the cost spread is the point</div>
+
+  <p>Every journey reports two numbers: what it costs on a quiet path where nothing goes wrong, and what
+  it costs if every conditional gate fires. Spend follows medical need.</p>
+
+  <table>
+    <tr><th>Pet</th><th>Quiet path / yr</th><th>If every gate fires / yr</th><th>Shape</th></tr>
+    <tr><td>Quorra2</td><td class="n">$0.06</td><td class="n">$1.85</td><td>empty record, re-engagement only</td></tr>
+    <tr><td>Quorra</td><td class="n">$0.18</td><td class="n">$21</td><td>geriatric, new client, three open problems</td></tr>
+    <tr><td>Ikko3</td><td class="n">$0.22</td><td class="n">$13.60</td><td>healthy cat, stalled problem-list cluster</td></tr>
+    <tr><td>Ikko</td><td class="n">$0.24</td><td class="n">$19.80</td><td>acute surgical decision + chronic atopy</td></tr>
+    <tr><td>Pobble</td><td class="n">$0.28</td><td class="n">$24</td><td>feral senior, stage 3 dental gated by anxiety</td></tr>
+  </table>
+
+  <div class="note">
+    <b>The $1.50 per patient per year figure describes none of these except Quorra2.</b> A low need pet
+    with no findings costs almost nothing to serve well. A complex senior with an open surgical decision
+    is worth an order of magnitude more. The average is not wrong because it is $1.50, it is wrong when
+    it is applied flat, to Quorra2 and to Pobble alike. The full argument is in
+    <a href="../../question-2/build.md">question-2/build.md</a>.
+  </div>
+
+  <div class="sec">What every journey has in common</div>
+
+  <p>Each one is built as parallel tracks, not sequential steps, the way the Biscuit example is. A pet
+  has several storylines running at once: a spine, a problem list, a household change, and each track
+  has its own trigger and its own exit. Each touch names its channel and cost, the Vetspire or Segment
+  event that fires it, and any conditional gate. The recurring rules, spend follows need, every message
+  creates an inbound to a real person, everything sent becomes the medical record, the two human queues
+  never cross, are in <a href="../../ground-rules.md">ground-rules.md</a>.</p>
+
+  <p>Two things no journey does. It never fires a vaccine due message off the text export, because the
+  export cannot reliably say which vaccine record is current, and a wrong "your pet is overdue" message
+  becomes part of the chart. And it never makes a clinical claim an exam has not supported.</p>
+
+  <footer>
+    Q1a, five journeys in the Biscuit format &middot; Q1b, the 25 record triage is
+    <a href="../triage.md">question-1/triage.md</a> &middot; the build system that would decide all of
+    this at 100 clinics is <a href="../../question-2/build.md">question-2/build.md</a>.
+  </footer>
+
+</div>
+</body>
+</html>

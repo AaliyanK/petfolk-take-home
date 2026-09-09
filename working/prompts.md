@@ -77,11 +77,17 @@ Everything used to produce the deliverable. Append as we go.
 
 Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + verify_quotes pass (0 misses on all).
 
+## Session 8 — Q1a index page + README short version
+
+- Built `question-1/journeys/index.html`: the map to Q1a. One card per pet (signalment, the one-line shape, phase/touch count, cost range, link to the journey and its evidence file), the cost-spread table ($0.06 to $0.28 quiet, $1.85 to $24 loaded), the two hard nos, the 193-spans-0-misses line. Matches the journey CSS.
+- Filled the README "short version": Q1a (what the journeys are + the verification), Q1b (the patterns), Q2 (pointer only, not drafted).
+- No PDF exports, Aaliyan does not want them.
+- Two forward links in index.html point to files not yet built: `../triage.md` (Q1b) and `../../question-2/build.md` (Q2). They resolve once those are written.
+- Paused here per Aaliyan.
+
 ## Planned
 
-- `question-1/journeys/index.html` (the reading map for the 5), PDF exports of all 5.
-- README "short version" for Q1.
-- Q1b: 25-record triage table from `ingestion-log.md`.
+- Q1b: `question-1/triage.md`, 25-record triage table from `ingestion-log.md`.
 - Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md`.
 - Voice-pass on deliverable-facing docs. Aaliyan records the video.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.

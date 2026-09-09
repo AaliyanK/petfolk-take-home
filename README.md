@@ -12,9 +12,9 @@ Start here, then go where you want.
 | Folder | What's in it |
 |---|---|
 | `ground-rules.md` | The 11 constraints every journey follows and Q2 is built on. Read this first. |
-| `question-1/journeys/` | 12 month journeys for 5 pets, in the format of the Biscuit example (HTML + PDF) |
-| `question-1/triage.csv` | All 25 records, my call on each |
-| `question-1/triage.md` | One page on how to read the table and the patterns across the 25 |
+| `question-1/journeys/index.html` | The map to Q1a. Start here for Question 1. |
+| `question-1/journeys/` | 12 month journeys for 5 pets, in the format of the Biscuit example (HTML) |
+| `question-1/triage.md` | Q1b: all 25 records, my call on each, plus the patterns across them |
 | `question-2/build.md` | How I would build the system that decides, for 42 clinics now and 100 in two years |
 | `working/how-i-worked.md` | The narrative: order of work, where AI did the work, where I overrode it |
 | `working/how-i-build-a-journey.md` | The repeatable method behind a journey. Also the spec Q2 automates. |
@@ -27,11 +27,31 @@ Start here, then go where you want.
 
 ## The short version
 
-(filled in once Q1 and Q2 are drafted)
+**Question 1a.** Five 12 month journeys, one per record, in the Biscuit format. Each is built as
+parallel tracks, not sequential steps. Every touch names its channel, its cost, the Vetspire or Segment
+event that fires it, and any conditional gate. Every pet specific line in a journey is a verbatim quote
+from that pet's record, checked by a string match script against the source, 193 quoted spans across the
+five, zero misses. Start at `question-1/journeys/index.html`.
 
-**Question 1.**
+The five span the range on purpose. Quorra2 is an empty record, a cat Petfolk has never seen, and her
+honest journey costs about 6 cents a year. Pobble is a feral rescue senior with stage 3 periodontal
+disease whose dental is gated by an unresolved anxiety medication question, and his journey costs 28
+cents on a quiet path or $24 if every escalation fires. Spend follows medical need. The flat $1.50
+average describes neither.
 
-**Question 2.**
+Two things no journey does. It never fires a vaccine due message off the text export, because the export
+cannot say which vaccine record is current and a wrong "your pet is overdue" line becomes part of the
+medical record. And it never makes a clinical claim an exam has not supported.
+
+**Question 1b.** All 25 records, a one to two line call on each, in `question-1/triage.md`. The
+cross cutting patterns: declines are almost always cost driven and are the business opportunity, not a
+closed door. Life events (a move, a death in the household, a new pet) drive the clinical picture and
+should be a trigger. Multi pet households are common and the data does not link them. Six records are
+header only stubs. Pre visit anxiety is everywhere, so a fear free pre visit track applies to a large
+share of the book.
+
+**Question 2.** In `question-2/build.md`. How the system that decides all of this would be built on the
+existing stack, for 42 clinics now and about 100 in two years.
 
 ## Decisions I made where the brief was open
 
