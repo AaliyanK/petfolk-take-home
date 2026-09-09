@@ -106,11 +106,15 @@ Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + veri
 - README Q2 short version filled with a real summary.
 - Q2 tracking: `decisions-log.md` M9 (Q2 is a decisioning layer not a rebuild; review moves per-message -> per-template; fail closed; the clinical-comms owner role). `how-i-worked.md` "Where I made the call the model could not" got the Q2 review-model bullet, plus a note on the Q1b review pass changing nothing and why that is still the point.
 
+## Session 11 — package and ship
+
+- Zip built: `petfolk-take-home.zip` (~478 KB, 59 files), full tree minus `.git`, **includes** the 25 records + `_INDEX.txt` for Petfolk.
+- Public GitHub repo created and pushed: https://github.com/AaliyanK/petfolk-take-home (branch renamed master -> main, 31 commits). Verified: `records/` on GitHub holds only `README.md`, zero `.txt` files published anywhere in the tree. The corpus is in the zip only.
+
 ## Planned
 
-- Voice-pass deliverable-facing docs (README, the journey demos, triage.md, build.md) for Aaliyan's style.
+- Voice-pass deliverable-facing docs (README, the journey demos, triage.md, build.md) for Aaliyan's style, if wanted.
 - Aaliyan records the walkthrough video (decisions-log.md is the script).
-- Zip the repo (records/ included in the zip, gitignored from the public repo).
 - Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md`.
 - Voice-pass on deliverable-facing docs. Aaliyan records the video.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.
