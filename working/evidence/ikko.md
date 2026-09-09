@@ -7,9 +7,9 @@
 
 Every span below is copied straight from the source. The number is the line it sits on.
 
-**The source wraps sentences across lines.** A quote only string-matches if it sits entirely on one line. So each entry gives the **usable span**, meaning the part that is safe to quote because it has no line break inside it. Do not stitch two lines together into one quote.
+**The source wraps sentences across physical lines.** We are assuming Petfolk's string match normalises whitespace (see `ground-rules.md`, assumption 1), so a quote can span a line wrap as long as the words are contiguous in the source. Where a span crosses a wrap, the line range is given as `L218-219`. Where a good single-line span exists we prefer it. The verification script checks both forms.
 
-**Aaliyan's verification job:** open `z1_MRS-45.txt`, go to the line number, confirm the usable span is character exact and means what the journey uses it for.
+**Aaliyan's verification job:** open `records/z1_MRS-45.txt`, go to the line number, confirm the span is character exact (allowing the wrap) and means what the journey uses it for.
 
 ---
 
@@ -49,17 +49,18 @@ Header weight is `33 lb` (L21). Exam weights range 31.4 to 36 over the record (s
 
 ## 4. The nail (the acute track)
 
-| Span (usable) | Line | Use |
+| Span | Line | Use |
 |---|---|---|
-| `Chronic, displaced ungual process fracture of the right front fourth digit (P3, D4).` | 561 | the diagnosis, clean sub-span (line continues `This is a weight-bearing`) |
-| `of the affected toe would provide the most reliable and definitive resolution.` | 219 | ortho email. Full thought is "if the toe continues to be painful, amputation / of the affected toe..." but "amputation" is the last word of L218, so quote from L219. |
-| `dogs generally adapt extremely well to the loss of a single digit and typically return to` | 220 | reassurance line from the ortho email, usable up to `return to` |
-| `amputation would be the treatment option most likely to provide her with long-term comfort and eliminate` | 234 | the second, plainer statement of the recommendation |
-| `These include continuing antibiotics while the current infection resolves, using a soft padded bandage,` | 223 | the conservative options |
-| `A culture of the discharge from the nail bed was also collected today. These results generally take several` | 905 | usable: `A culture of the discharge from the nail bed was also collected today.` Result is pending as the record ends. |
-| `strict rest with no jumping, stairs, or walks; she should be carried outside for elimination. An E-collar must` | 647 | usable: `strict rest with no jumping, stairs, or walks` and `she should be carried outside for elimination.` |
-| `be worn at all times to prevent licking at the bandage.` | 648 | E-collar instruction, clean sub-span |
-| `Ikko [NAME] return in two days for a recheck and bandage change.` | 646 | usable: `return in two days for a recheck and bandage change.` (the `[NAME]` is a pseudonymiser gap where "is to" or similar was) |
+| `Chronic, displaced ungual process fracture of the right front fourth digit (P3, D4).` | 561 | the diagnosis. Same phrasing as the problem-list entry at L247. |
+| `if the toe continues to be painful, amputation of the affected toe would provide the most reliable and definitive resolution` | 218-219 | the ortho recommendation, from the follow-up email |
+| `dogs generally adapt extremely well to the loss of a single digit and typically return to normal activity after recovery` | 220-221 | the reassurance line from the same email |
+| `These include continuing antibiotics while the current infection resolves, using a soft padded bandage, or placing a splint under the paw` | 223-224 | the conservative options |
+| `A decision does not need to be made today` | 653 | usable sub-span, from the discharge |
+| `A culture of the discharge from the nail bed was also collected today.` | 905 | single line. Result is pending as the record ends. |
+| `strict rest with no jumping, stairs, or walks` | 647 | single-line sub-span |
+| `she should be carried outside for elimination` | 647 | single-line sub-span |
+| `An E-collar must be worn at all times to prevent licking at the bandage` | 647-648 | the E-collar instruction |
+| `return in two days for a recheck and bandage change` | 646 | single-line sub-span (the `[NAME]` before it is a pseudonymiser gap) |
 | `Injury of nail - Jun 23, 2026` | 241 | onset date. The nail has been an open problem for over a month. |
 
 Visit sequence for the nail, for the timeline (dates as they appear in the file): first seen `Jun 23, 2026` (L241), recheck `July 2, 2026` (L1431), recheck `July 13, 2026` (L1117), sedated procedure `July 27, 2026` (L311), ortho follow-up email `Jul 28` (L212).
@@ -72,10 +73,11 @@ Visit sequence for the nail, for the timeline (dates as they appear in the file)
 | `ideal weight ~27lbs` | 1617, 2090 | vet's stated target |
 | `6.5-7 - ideal weight ~27lbs` | 3089, 3632 | earlier note, BCS was 6.5 to 7 in Oct/Nov 2025 |
 | `Overweight - ideal weight ~27lbs` | 3683 | on the Oct 26 2025 DDx list |
-| `-Discussed the weight loss plan and the associated health risks of being overweight, including an increased` | 1420 | usable as written (it is one line, starts with a dash) |
-| `risk for diabetes and ligament tears. Advised reducing her current food volume by a quarter of a cup daily.` | 1421 | usable sub-spans: `risk for diabetes and ligament tears.` and `Advised reducing her current food volume by a quarter of a cup daily.` |
-| `Discussed that low-sodium green beans can be used as a low-calorie supplement to help with satiety.` | 1422 | clean, whole line |
-| `Recommended reducing or eliminating high-calorie treats and table scraps, including the cheese used for` | 1423 | usable: `Recommended reducing or eliminating high-calorie treats and table scraps` |
+| `Discussed the weight loss plan and the associated health risks of being overweight, including an increased risk for diabetes and ligament tears` | 1420-1421 | the health framing, in the vet's words |
+| `Advised reducing her current food volume by a quarter of a cup daily.` | 1421 | single line, the concrete instruction |
+| `Discussed that low-sodium green beans can be used as a low-calorie supplement to help with satiety.` | 1422 | single line |
+| `Recommended reducing or eliminating high-calorie treats and table scraps, including the cheese used for medication administration.` | 1423-1424 | the treats-and-cheese line. She is on multiple meds hidden in cheese, so this is a real calorie source. |
+| `The owner reports giving cheese to help with medication administration.` | 1173 | verify. Confirms the cheese-for-pills habit from the owner's side. |
 
 Exam weights across the record: `Weight 32 lb` (L3624, Oct 2025), `Weight 31.4 lb` (L3081, Nov 2025), `Weight 36 lb` (L2498, Mar 2026), `Weight 35.8 lb` (L2082, Jun 2026), `Weight 35 lb` (L1607, Jul 2), `Weight 33.4 lb` (L500, Jul 27). She gained through the winter, then came back down. Verify each of these line numbers.
 
@@ -83,15 +85,15 @@ Exam weights across the record: `Weight 32 lb` (L3624, Oct 2025), `Weight 31.4 l
 
 | Span (usable) | Line | Use |
 |---|---|---|
-| `Ikko is having skin allergies since we moved to NC.` | 3406 | owner's own words, whole line, the Oct 26 2025 reason for visit |
-| `consistent with a flare-up of environmental allergies, which is common after` | 3136 | usable sub-span of the DDx |
-| `A secondary bacterial infection is suspected.` | 3137 | clean sub-span |
-| `allergy (chicken) is also part of the history.` | 3138 | clean line. Context: "A known food / allergy (chicken)..." wraps L3137 to L3138. |
-| `is allergic to chicken.` | 3413 | owner's phrasing, clean sub-span (full sentence "We know she / is allergic to chicken." wraps) |
-| `Recently moved from the Poconos.` | 3471 | whole line |
-| `Please give 1 tablet by mouth every 12 hours for two weeks. Then 1 tablet by mouth once every 24 hours to` | 2787 | Apoquel sig, usable as one line |
-| `relieve itching long term. DO NOT skip doses, itching will return.` | 2788 | usable: `DO NOT skip doses, itching will return.` This is the adherence hook. |
-| `Cytopoint 40 mg (Declined)` | 3205 | she declined Cytopoint. Also `Apoquel 5.4mg Oral Tablet (Declined)` L3217, `Simparica Trio ... (Declined)` L3229. |
+| `Ikko is having skin allergies since we moved to NC.` | 3406 | owner's own words, single line, the Oct 26 2025 reason for visit |
+| `consistent with a flare-up of environmental allergies, which is common after relocating to a new geographic area` | 3136-3137 | the DDx framing |
+| `A secondary bacterial infection is suspected.` | 3137 | single-line sub-span |
+| `A known food allergy (chicken) is also part of the history.` | 3137-3138 | the food-allergy note in the DDx |
+| `We know she is allergic to chicken.` | 3412-3413 | owner's phrasing |
+| `Recently relocated to North Carolina from the Poconos, with exposure to new grass and plants.` | 3468-3469 | the move and the trigger |
+| `Please give 1 tablet by mouth every 12 hours for two weeks. Then 1 tablet by mouth once every 24 hours to relieve itching long term.` | 2787-2788 | the Apoquel sig |
+| `DO NOT skip doses, itching will return.` | 2788 | single line, the adherence hook |
+| `Cytopoint 40 mg (Declined)` | 3205 | she declined Cytopoint. Also `Apoquel 5.4mg Oral Tablet (Declined)` L3217, `Simparica Trio Chewable Tablets for Dogs 22.1 to 44 Pounds, Teal Label (Declined)` L3229. |
 
 She elected Apoquel at the Nov 20 2025 visit after declining Cytopoint twice.
 
@@ -129,11 +131,16 @@ She elected Apoquel at the Nov 20 2025 visit after declining Cytopoint twice.
 | `FORWARD OndiKED ROUTINE WELLNESS` | 250 | forward-booked annual |
 | `Nov 19, 2026 \| 1:30 pm` | 249 | the forward-booked annual date |
 
-## 10. Data inconsistencies caught in this record
+## 10. Data inconsistencies caught, and what we decided
 
-1. **Left versus right.** The radiograph text at L584 to L585 reads `LEFT MANUS` and `left front digit four`, but the diagnosis, the problem list, the DDx and the discharge all say **right front digit 4** (L247, L561, and elsewhere). Treat it as a clinic template error and quote the right-front phrasing, which is consistent everywhere except the one radiograph block.
-2. **Two bordetella entries.** The header lists a bordetella injectable given Nov 20 2025 (due Nov 20 2026, L76) and a bordetella intranasal given Mar 26 2026 (due Mar 26 2027, L2594). The Mar 2026 one is current. A naive read of the export would flag her as due in Nov 2026. This is a concrete case for rule 5: you need structured vaccine data to know which record is live.
-3. **The nail onset date.** The problem list says `Jun 23, 2026` (L241). A support note says `previously seen on 07/03/2026 for a broken nail` (around L1161). Likely a pseudonymiser date shift. Use `Jun 23, 2026` since it is the problem-list entry.
+**A. Left versus right paw.** The radiograph block at L584 to L585 reads `LEFT MANUS` and `left front digit four`. Every other reference in the file, the diagnosis at L561, the problem list at L247, the DDx, and the discharge, says **right front digit 4**.
+**Decision:** clinic template error in the one radiograph block. We quote the right-front phrasing, which is consistent everywhere else. We note this in the journey footer as a caught inconsistency.
+
+**B. Two bordetella entries with different due dates.** The header lists bordetella injectable given Nov 20 2025, next due `Nov 20, 2026` (L76), and bordetella intranasal given Mar 26 2026, next due `Mar 26, 2027` (L2594). A naive read of the export would flag her as due in November.
+**Decision:** we do not fire a bordetella-due touch off the text export at all. Under rule 5 (no API), the export does not tell us reliably which vaccine record is live, and a wrong "your dog is overdue" message becomes part of the chart. The journey's vaccine touches depend on a structured Vetspire feed with a current-record flag, and we list that as a required field. We say this plainly in the journey footer.
+
+**C. Nail onset date.** The problem list entry reads `Injury of nail - Jun 23, 2026` (L241). A later support note refers to Ikko being `previously seen on 07/03/2026 for a broken nail` (around L1161).
+**Decision:** use `Jun 23, 2026`. The problem list is Vetspire's own dated field, the support note is a staff member's recollection, and the June date is consistent with the first physical exam in the file being June 23. We note the discrepancy in the footer so a reviewer sees we caught it.
 
 ## 11. Unknowns the journey has to branch on
 

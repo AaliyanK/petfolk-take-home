@@ -2,3 +2,7 @@ node_modules/
 .DS_Store
 *.log
 scratch/
+
+# Petfolk's assessment corpus. Included in the zip sent to Petfolk, not in the public repo.
+# See records/README.md.
+records/*.txt
