@@ -94,8 +94,22 @@ Exam weights across the record: `Weight 32 lb` (L3624, Oct 2025), `Weight 31.4 l
 | `Please give 1 tablet by mouth every 12 hours for two weeks. Then 1 tablet by mouth once every 24 hours to relieve itching long term.` | 2787-2788 | the Apoquel sig |
 | `DO NOT skip doses, itching will return.` | 2788 | single line, the adherence hook |
 | `Cytopoint 40 mg (Declined)` | 3205 | she declined Cytopoint. Also `Apoquel 5.4mg Oral Tablet (Declined)` L3217, `Simparica Trio Chewable Tablets for Dogs 22.1 to 44 Pounds, Teal Label (Declined)` L3229. |
+| `Allergic conjunctivitis – Ocular erythema is likely secondary to the underlying allergic disease.` | 3139 | her eyes flare with the skin |
 
 She elected Apoquel at the Nov 20 2025 visit after declining Cytopoint twice.
+
+**Home-care advice the vet gave, for a spring flare touch (all verified, multi-line where noted):**
+
+| Span | Line |
+|---|---|
+| `Frequent bathing with a medicated, soothing shampoo helps to physically wash the allergens off their skin` | 3880-3881 |
+| `I recommend bathing itchy dogs 1 to 2 times a week` | 3332 |
+| `Duoxo Calm Shampoo` | 3883 |
+| `wiping down your pet's fur with a moist cloth every time they come back inside` | 3290-3291 |
+| `non-scented, non-alcoholic baby wipe` | 3899 |
+| `Omega 3 fatty acid supplementation also helps with allergies` | 3337 |
+| `free-standing air purifiers for the home` | 3286-3287 |
+| `Chicken is the by far most common food allergy I see` | 3292 |
 
 ## 7. Dental (a light track or a single touch)
 
