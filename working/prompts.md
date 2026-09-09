@@ -28,8 +28,15 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 3: `question-1/journeys/ikko.html`, cloned from the Biscuit CSS. Verbatim record quotes wrapped in `<span class="q">` and highlighted; proposed message copy in plain quotes, Biscuit style.
 - Phase 4: `working/scripts/verify_quotes.py`. Run: `python working/scripts/verify_quotes.py question-1/journeys/ikko.html records/z1_MRS-45.txt`. Result: 46 spans, 38 raw match, 8 match under whitespace normalisation, 0 misses.
 
+## Session 4 — Q1a, Ikko3
+
+- Re-read `records/z2_16MRS-16.txt` end to end (3512 lines, 58 Petfolk pages + 23 page prior-clinic history).
+- Phase 1: `working/evidence/ikko3.md`. Threads: pica/foreign body (ribbon Jul 2025, garland Dec 2025, standing behaviour), hairballs/vomiting, chronic loose stools never worked up, dental plaque + deferred bloodwork, FAS 0→3→1 with un-gettable gabapentin, weight + the new-puppy weight-loss call, flea risk from the puppy, rabies due Nov 2026.
+- Every quotable span grep-checked with line numbers. Section 13 logs the caught issues: client name bleed (`Guthrie Pellow` vs `Guthrie Emery Yancey` vs the LVT `Emery Yancey` pasted onto the pet), a second bled-in name `Stormy` used for Ikko3 on the Jul 21 2026 call, two clinic locations, three forms of the rabies due date, age drift.
+- Handed to Aaliyan to verify against the source before Phase 2.
+
 ## Planned
 
-- Phases 1 to 4 for Ikko3, Quorra, Pobble, Quorra2, in that order.
+- Phase 2 (design) for Ikko3, then Phases 3 to 4. Then Quorra, Pobble, Quorra2, same four phases.
 - `question-1/journeys/index.html`, PDF exports, README summary.
 - Q1b triage from `ingestion-log.md`. Q2 build memo from `how-i-build-a-journey.md`.
