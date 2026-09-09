@@ -63,8 +63,25 @@ Everything used to produce the deliverable. Append as we go.
 - Phase 3: `question-1/journeys/pobble.html`, cloned from the Quorra HTML. 6 phases (A dental spine, A after the dental, B appointment-keeping, C anxiety, D atopy, E recurring spine), 33 rows, 41 verbatim spans, 10 gates, all 10 pill types.
 - Phase 4: `python working/scripts/verify_quotes.py question-1/journeys/pobble.html records/z2_MRS.txt`. Result: 41 spans, 34 raw / 7 whitespace-normalised / 0 misses. Tag depth balanced.
 
+## Session 7 — Q1a, Quorra2 (the header-only stub)
+
+- Read `records/dl_MRS-_1_.txt` (25 lines) and `records/dl_MRS.txt`. Byte-identical except the doc_id line (`dl:MRS-(1)` vs `dl:MRS`), same patient PT-D70372. One record exported twice.
+- The whole record: Quorra2, 6y FS DSH cat, 13.2 lb, Frisco TX, owner Kestrel Ames, no encounter, no problem list, no vaccine history, nothing.
+- Phase 1: `working/evidence/quorra2.md`. Sections 4 (what is NOT here) and 6 (what the journey can and cannot do) are the whole file.
+- Phase 2: `working/design/quorra2.md`. The "empty record" journey. Three tracks: A establish care (get her in for a first exam, honestly, exits the moment she is seen), B onboarding basics, D a quiet spine. The 13.2 lb figure is a reason to book, never "overweight". No clinical claims anywhere. ~11 touches. Cost $0.06 unconditional / $1.85 if every gate fires, the one pet where the $1.50 average is close to right.
+- Thin record, so evidence + design + HTML in one pass (like Quorra), flagged here.
+- Phase 3+4: `question-1/journeys/quorra2.html`, 3 phases, 13 rows, 11 verbatim spans, 1 gate. verify_quotes.py: 11 spans, all raw, 0 misses.
+- Tracked: decisions-log.md D-QUORRA2-1..3 / C-QUORRA2-1..4.
+
+## All 5 Q1a journeys done
+
+Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + verify_quotes pass (0 misses on all).
+
 ## Planned
 
-- Aaliyan verifies the Pobble spans against the source when he gets to it.
-- Then Quorra2 (`dl_MRS-_1_`), the header-only stub.
+- `question-1/journeys/index.html` (the reading map for the 5), PDF exports of all 5.
+- README "short version" for Q1.
+- Q1b: 25-record triage table from `ingestion-log.md`.
+- Q2: build memo (`question-2/build.md`) from `how-i-build-a-journey.md` + `ground-rules.md`.
+- Voice-pass on deliverable-facing docs. Aaliyan records the video.
 - Then `question-1/journeys/index.html`, PDF exports, README short version, Q1b triage from `ingestion-log.md`, Q2 build memo from `how-i-build-a-journey.md`.

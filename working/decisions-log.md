@@ -75,6 +75,14 @@ For the standing rules and assumptions that apply to every journey, see `ground-
 | D-POBBLE-5 | `Toby` used for Pobble in one intake's free text; attachments titled `Pobble Bodhi`. | No alternate or personal name quoted. Key on Patient ID `PT-306BA7`. | Pseudonymiser name bleed. Client name `Bodhi Skarn` is consistent here, unlike Ikko3 and Quorra. |
 | D-POBBLE-6 | Weight fell 12.8 to 10.6 lb over two years while BCS rose 4 to 5 (ideal). | Low stakes on its own, but a reason the Sept 28 PABW should be a full panel, not a pre-anaesthetic minimum. | He was underweight from the 2024 anxiety crisis and is now ideal. Paired with an un-worked-up polydipsia flag and two-year-old labs, a full panel is warranted. |
 
+### Quorra2 (`dl_MRS-_1_`)
+
+| # | Conflict | Decision | Reasoning |
+| --- | --- | --- | --- |
+| D-QUORRA2-1 | `dl_MRS.txt` (`dl:MRS`) and `dl_MRS-_1_.txt` (`dl:MRS-(1)`) are byte-identical except the doc_id line. Same patient PT-D70372. | Treat as one record. The brief names `dl_MRS-_1_` as the journey target, so use that. | One 1-page record exported twice with two doc_ids. Different from Quorra vs Quorra2, which are genuinely different animals. |
+| D-QUORRA2-2 | `Color: Grey Dr. K. Lockhart`, a clinician name bled into the colour field. | No colour quoted. | Standard pseudonymiser artifact. |
+| D-QUORRA2-3 | Owner `Kestrel Ames`, distinct from the reused Guthrie Pellow / Bodhi Skarn. | Key on Patient ID `PT-D70372`. | Standing rule O2. |
+
 ## Clinical calls (human in the loop)
 
 These are calls Aaliyan made or confirmed, not the model.
@@ -94,4 +102,8 @@ These are calls Aaliyan made or confirmed, not the model.
 | C-POBBLE-3 | Pobble | The Sept 28 PABW is treated as load-bearing. A missed appointment gets one firm re-book (SMS + a human callback), tied to the consequence, not a passive reschedule nudge. | in `working/design/pobble.md` Track B |
 | C-POBBLE-4 | Pobble | Atopy is a dormant-watch track: no routine touches while quiet, one seasonal check before January, opens only on a reported flare. | in `working/design/pobble.md` Track D |
 | C-POBBLE-5 | Pobble | Lepto is not re-pushed after repeated declines. At most one factual line at the annual if the DVM wants it raised. | in `working/design/pobble.md` Track E |
+| C-QUORRA2-1 | Quorra2 | A header-only record gets an honest re-engagement journey: no clinical claims, no invented wellness story, every touch explicit about the data gap. This is decision O3 applied. | in `working/design/quorra2.md` |
+| C-QUORRA2-2 | Quorra2 | The lone weight figure (`13.2 lb`, no BCS, no second weight) is a reason to book an exam, never stated as "overweight". No weight-loss campaign off a single scale reading. | in `working/design/quorra2.md` Track C |
+| C-QUORRA2-3 | Quorra2 | The journey ends the moment Quorra2 has any encounter; a real journey built on findings replaces it. | in `working/design/quorra2.md` Track A |
+| C-QUORRA2-4 | Quorra2 | Booking outreach is capped (about 5 touches in 60 days, then quiet with 2 re-touches), not an open-ended nag. | in `working/design/quorra2.md` |
 | _more added as journeys are drafted_ |       |                                                                                                                                                                                                                             |                                       |
