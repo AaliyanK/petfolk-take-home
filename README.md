@@ -18,7 +18,9 @@ Start here, then go where you want.
 | `working/how-i-worked.md` | How I worked, where AI did the work, where I overrode it |
 | `working/prompts.md` | The prompts that moved the work, in order |
 | `working/model-corrections.md` | Every place the model or the data was wrong, and what I did about it |
-| `working/` | Everything else: the record by record notes, my teardown of the Biscuit example, the scripts, the quoted spans behind every journey |
+| `working/ingestion-log.md` | What every one of the 25 records actually contains, one entry each |
+| `working/biscuit-anatomy.md` | My teardown of the Biscuit example: every touch, every trigger, the cost math |
+| `working/` | Everything else: the scripts, the quoted spans behind every journey |
 
 ## The short version
 
