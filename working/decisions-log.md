@@ -62,6 +62,9 @@ These are calls Aaliyan made or confirmed, not the model.
 | # | Pet | Call | Status |
 |---|---|---|---|
 | C-IKKO-1 | Ikko | The declined items and the amputation decision are branch points the journey waits on, not things a message pushes. | approved, in `working/design/ikko.md` |
+| C-IKKO3-1 | Ikko3 | Nothing anaesthetic (the dental, therefore the deferred wellness bloodwork) is offered until the pre-visit gabapentin problem is solved. The dental email is gated behind a YES/NO check on whether the owner can dose her. | in `working/design/ikko3.md` Track E |
+| C-IKKO3-2 | Ikko3 | The IBD question (`Ddx hairballs ... vs primary GI (IBD flare up)`) is not driven by a message. The journey surfaces it in Tracks C and D and gates escalation on owner interest and a symptom threshold. | in `working/design/ikko3.md` |
+| C-IKKO3-3 | Ikko3 | The pica track is a permanent low-cost safety net with an always-on urgent-routing rule, not a timed campaign, because the behaviour never resolves. | in `working/design/ikko3.md` Track B |
 | _more added as journeys are drafted_ | | | |
 
 ---

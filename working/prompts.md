@@ -33,10 +33,12 @@ Everything used to produce the deliverable. Append as we go.
 - Re-read `records/z2_16MRS-16.txt` end to end (3512 lines, 58 Petfolk pages + 23 page prior-clinic history).
 - Phase 1: `working/evidence/ikko3.md`. Threads: pica/foreign body (ribbon Jul 2025, garland Dec 2025, standing behaviour), hairballs/vomiting, chronic loose stools never worked up, dental plaque + deferred bloodwork, FAS 0→3→1 with un-gettable gabapentin, weight + the new-puppy weight-loss call, flea risk from the puppy, rabies due Nov 2026.
 - Every quotable span grep-checked with line numbers. Section 13 logs the caught issues: client name bleed (`Guthrie Pellow` vs `Guthrie Emery Yancey` vs the LVT `Emery Yancey` pasted onto the pet), a second bled-in name `Stormy` used for Ikko3 on the Jul 21 2026 call, two clinic locations, three forms of the rabies due date, age drift.
-- Handed to Aaliyan to verify against the source before Phase 2.
+- Aaliyan approved the data-conflict calls (name bleed, Stormy, two locations, rabies date, age drift). Asked that every decision and prompt be tracked in the repo for the walkthrough video.
+- Built `working/decisions-log.md`: one consolidated trail of method / open-brief / data-conflict / clinical calls, each with reasoning and repo location. Added the Ikko3 name bleed as a concrete "caught the model" example (`model-corrections.md` #5).
+- Phase 2: `working/design/ikko3.md`. Six tracks: A weight call and recheck (anchor), B pica safety net (permanent, low cost), C hairballs, D the unfinished loose-stool workup, E the FAS gap then the dental (dental gated behind the gabapentin fix), F fleas and the puppy and the preventive spine. About 21 touches. Cost $0.22 unconditional / $13.60 if every gate fires.
 
 ## Planned
 
-- Phase 2 (design) for Ikko3, then Phases 3 to 4. Then Quorra, Pobble, Quorra2, same four phases.
+- Aaliyan reviews `working/design/ikko3.md`, then Phase 3 (HTML) and Phase 4 (verify). Then Quorra, Pobble, Quorra2, same four phases.
 - `question-1/journeys/index.html`, PDF exports, README summary.
 - Q1b triage from `ingestion-log.md`. Q2 build memo from `how-i-build-a-journey.md`.
