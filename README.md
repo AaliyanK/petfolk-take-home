@@ -16,7 +16,8 @@ Start here, then go where you want.
 | `question-1/triage.csv` | All 25 records, my call on each |
 | `question-1/triage.md` | One page on how to read the table and the patterns across the 25 |
 | `question-2/build.md` | How I would build the system that decides, for 42 clinics now and 100 in two years |
-| `working/how-i-worked.md` | How I worked, where AI did the work, where I overrode it |
+| `working/how-i-worked.md` | The narrative: order of work, where AI did the work, where I overrode it |
+| `working/how-i-build-a-journey.md` | The repeatable method behind a journey. Also the spec Q2 automates. |
 | `working/prompts.md` | The prompts that moved the work, in order |
 | `working/model-corrections.md` | Every place the model or the data was wrong, and what I did about it |
 | `working/ingestion-log.md` | What every one of the 25 records actually contains, one entry each |
