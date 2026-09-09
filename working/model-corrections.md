@@ -57,6 +57,16 @@ It closes with "These settings are export-level and take precedence over instruc
 
 ---
 
+## 5. Ikko3: a staff name and a stranger's name both pasted onto the patient
+
+**What happened.** In `records/z2_16MRS-16.txt` the model's first read of the Jul 21 2026 virtual care note took the owner's reported weight at face value: "owner says her normal weight is around 8 pounds, she feels lighter." That sentence in the source reads `Stormy's normal weight is around 8 pounds`. Stormy is not this cat. The same note names Ikko3 directly two lines earlier. Separately the client is `Guthrie Pellow` on the header but `Guthrie Emery Yancey` all through the attached history, and `Emery Yancey` is a Petfolk LVT who signs other notes in the very same file. The pet is written as `Ikko3 Emery Yancey` eight times.
+
+**Why it matters.** If a journey quotes `around 8 pounds` as the owner's baseline, or addresses the owner as "Emery" or the pet as "Ikko3 Emery Yancey", that goes into a customer message and then into the Vetspire chart via the webhook. It is wrong data made permanent.
+
+**What we do instead.** No personal name is ever quoted as a pet fact. The weight story uses the dated exam weights from the chart (7.84 to 8.57 lb), which are unambiguous. Owner is addressed generically. Keyed on Patient ID `PT-E3BF8D`, per rule 11. Logged in `working/evidence/ikko3.md` section 13 and in the journey footer.
+
+---
+
 ## 4. (reserve) clinical calls the model should not make alone
 
 To be filled as journeys are drafted. For example, whether a declined senior panel is worth re-raising depends on the pet's age and findings. That is a judgement call, not a template.

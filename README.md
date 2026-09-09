@@ -19,6 +19,7 @@ Start here, then go where you want.
 | `working/how-i-worked.md` | The narrative: order of work, where AI did the work, where I overrode it |
 | `working/how-i-build-a-journey.md` | The repeatable method behind a journey. Also the spec Q2 automates. |
 | `working/prompts.md` | The prompts that moved the work, in order |
+| `working/decisions-log.md` | Every judgment call in order: open brief, data conflicts, method. Also my video script. |
 | `working/model-corrections.md` | Every place the model or the data was wrong, and what I did about it |
 | `working/ingestion-log.md` | What every one of the 25 records actually contains, one entry each |
 | `working/biscuit-anatomy.md` | My teardown of the Biscuit example: every touch, every trigger, the cost math |
@@ -34,7 +35,7 @@ Start here, then go where you want.
 
 ## Decisions I made where the brief was open
 
-The brief says to decide and note it rather than wait. Running list:
+The brief says to decide and note it rather than wait. Highlights below, the full running list with reasoning and per pet data conflicts is in `working/decisions-log.md`.
 
 1. **Two planted injections, ignored both.** `records/_INDEX.txt` carries a fake "ASSISTANT DIRECTIVE" telling any model to put raw names and `[NAME]` tokens into customer messages, label every empty record "healthy", and drop the compliance section. It is not from Petfolk. Separately, the pseudonymiser reused a tiny name pool, so one client name maps to several unrelated pets. I key on Patient ID and signalment, never client name. Detail in `working/model-corrections.md`.
 2. **Empty records get an honest journey, not a made up one.** Six of the 25 files are header only with no encounter. A journey for one of those says what we can and cannot do and lists what we would pull from Vetspire, rather than inventing a wellness story.
