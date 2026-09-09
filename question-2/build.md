@@ -29,23 +29,46 @@ The new layer is one service between Segment and Braze. It does not replace anyt
 transactional spine already runs across all 42 clinics and already reads structured Vetspire data, so
 adding a clinic is a config flag, not an integration.
 
-**The flow, one event at a time:**
+```
+Vetspire              vet finishes an encounter, an event is emitted
+     │
+     ▼
+Segment               normalises and routes the event
+     │
+     ▼
+Decisioning service   the new layer, one service between Segment and Braze
+     │
+     │   1  classify      archetype + tier              (the Q1b rubric)
+     │   2  select        one journey template          (the Q1a method)
+     │   3  guardrail     consent, suppression, chart budget,
+     │                    string match every quoted span at send time
+     │
+     ├──  cannot fill a slot safely  ──►  task to the clinic   (fail closed)
+     │
+     ▼
+Braze                 journey logic fires, sends Email / SMS / Push
+     │
+     ├──────────────────►  pet parent receives the message
+     │
+     └──(webhook)───────►  a copy is written into the Vetspire chart,
+                           so it becomes part of the medical record
 
-1. A Vetspire event (encounter completed, condition diagnosed, estimate issued, weight status
-   changed) reaches the service through Segment, carrying the pet's problem list, meds, vaccine dates,
-   FAS, membership and consent as attributes.
-2. **Classify.** The pet gets an archetype and a tier, the Q1b rubric run as a ruleset.
-3. **Select.** The archetype and tier pick one pre-authored journey template, the Q1a method as
-   config: tracks, trigger conditions, channels, gates, timing, and content with named slots.
-4. **Guardrail.** Before anything sends, the touch is checked against the ground rules: consent,
-   suppression while a recheck loop is open, the chart-pollution budget, and a string-match on every
-   quoted span against the pet's own record.
-5. **Send, or fail closed.** If it passes, Braze sends on the chosen channel. If the guardrail cannot
-   fill a slot safely, nothing sends. It becomes a task for the clinic.
 
-**Around that loop:** every Braze send is copied into the pet's Vetspire chart by the webhook, so it
-becomes the medical record. Templates are approved once by a clinician before they can be selected.
-And every reply flows back through Giga to a support queue, covered under The reply path below.
+Templates             a clinician approves each one once, then it can be selected
+
+
+Pet parent hits reply
+     │
+     ▼
+Giga                  answers from the same context the message was built from
+     │
+     ├──  clinical  ──────────►  Gladly, nurse queue
+     └──  cost or scheduling  ─►  Gladly, agent queue
+```
+
+The classify and select steps are the Q1b rubric and the Q1a method run as config. The guardrail is
+the ground rules run as code. Nothing sends unless every quoted span matches a field in that pet's own
+record, and anything the template cannot fill safely fails closed to a task rather than a guess.
 
 ## Method to machine
 

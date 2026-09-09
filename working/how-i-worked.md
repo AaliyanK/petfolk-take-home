@@ -44,7 +44,13 @@ The brief says to use AI heavily. The split I settled on, and the reason for eac
 ## Where I made the call the model could not
 
 - **Ikko's dental bundle.** A hard "it is required anyway" bundle like Biscuit's senior panel would be manufacturing a reason, because nothing on her chart requires anaesthesia on a schedule. Chose a soft conditional bundle tied to the toe surgery that is actually on the table.
-- (more as the journeys get drafted)
+- **Pobble's dental timeline.** Gated the whole thing behind resolving the anxiety-medication question, and made the fluoxetine-versus-"no meds" conflict a branch the journey does not resolve, it asks the owner and routes to a nurse.
+- **The Q1b rubric and its tier cut-lines.** A business-design call about how much a customer relationship is worth and where the money goes. The model proposed a rubric, I set it.
+- **The Q2 review model.** Per-message clinical review does not scale and there is no review board. The call: review moves to the template level, the system fails closed rather than guessing, and a clinical-communications owner role has to be created. `question-2/build.md`.
+
+## Where the review pass changed nothing, and why that is still the point
+
+The Q1b triage: I read all 25 rows and confirmed every archetype and tier with no per-pet overrides. That is a weaker headline than "I changed ten things", but it is honest, and the reason it held is documented in `question-1/triage.md` under "The review pass": the rubric was agreed first, the facts came from full reads already verified, and a triage row is a routing call not a treatment plan.
 
 ## Method notes
 
