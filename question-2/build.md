@@ -78,7 +78,7 @@ The manual pipeline maps almost one to one onto components.
 |---|---|
 | Set the anchor, inventory trigger candidates | a Vetspire event arrives via Segment, with the pet's problem list, meds, vaccine dates, FAS, membership, consent as attributes |
 | Sort into tracks, touches, left out | the classifier picks an archetype and tier, which selects one pre authored journey template |
-| The six decisions per touch | the template: each track has a trigger condition, a channel, gate logic, timing, and content with named slots that pull from named Vetspire fields |
+| The six decisions per touch | baked into the template: trigger, channel, gate, timing, and copy with named slots (next section) |
 | Run every touch through the ground rules | the guardrail layer, below |
 | The recurring spine | one standing always on journey, identical for every pet, additive |
 | The footer, the sanity pass | monitoring: cost per tier, touch counts, escalation rates, a sampled human audit |
@@ -86,15 +86,70 @@ The manual pipeline maps almost one to one onto components.
 The model drafts templates and tunes the classifier. It never writes a live message. A live send is a
 template plus that pet's data, deterministic, with no model in the path.
 
+## What a template is
+
+A template is the pre-authored unit that replaces hand-building a journey per pet. Five parts.
+
+| Part | What it is |
+|---|---|
+| Entry rules | which pets it runs for: an archetype, a tier, and conditions. "Cat, healthy adult, T2, with a dental finding on the problem list." |
+| Structure | the tracks and touches from Q1a. Each touch has a trigger event, a channel, a gate, and a day offset. |
+| Copy | the message wording. Fixed, approved, not generated. |
+| Slots | named blanks in the copy, filled at send time from the pet's record. |
+| Field map | which Vetspire field feeds which slot. |
+
+A slot is one of two kinds. A **data slot** (pet name, appointment date, membership status) fills from
+a field as plain text. A **verbatim quote slot** (the vet's own words about the teeth) fills only from
+one named field in that pet's record, and the string match gate then checks the filled text actually
+appears in that field. If the field is empty or the match fails, nothing sends.
+
+The first template to go live, discharge summary enrichment, looks like this:
+
+```
+template: discharge_enrichment_v1
+entry:    any Encounter Completed
+touch:    day 0, evening · email
+gate:     clinical consent on file · pet not in a suppressed state
+
+copy:
+  "We saw {pet_name} today. Here is what the vet found and what happens next.
+
+   {diagnosis_quote}
+
+   {plan_quote}
+
+   {home_care_quote}
+
+   Reply to this email and a real person will get back to you."
+
+field map:
+  pet_name         <- patient.name                     (data slot)
+  diagnosis_quote  <- encounter.assessment_text         (verbatim, string matched)
+  plan_quote       <- encounter.plan_text               (verbatim, string matched)
+  home_care_quote  <- encounter.discharge_instructions  (verbatim, string matched)
+```
+
+A clinician reads that once. They are approving the frame and the field map, that the diagnosis comes
+from `assessment_text` and not from some free text note that might name the wrong pet. Every send is
+that frame plus three spans lifted straight from the chart. Nothing is written live.
+
+The five Q1a journeys are five template instances, one per archetype. Ikko's journey is the "dog,
+acute turned chronic, T2 to T3" template filled with Ikko's data.
+
 ## The one hard part: review without a review board
 
-Every send becomes the medical record and no one signs off on clinical content today. Per message
-review does not scale. So review moves up one level. A clinician approves each **template** once, and
-the template declares exactly which Vetspire field fills which slot. The verbatim quote slots are
-checked at send time by the same string match used in Q1 (`working/scripts/verify_quotes.py`), now a
-runtime gate: if a quoted span does not match a field in that pet's record, the message does not go.
-Anything the template cannot fill safely **fails closed** to a task for the clinic, it does not send a
-guess. On top of that, a sampled audit of live sends and a kill switch per journey type per clinic.
+Every send becomes the medical record and no one signs off on clinical content today. You cannot
+review every message, there are millions. You can review a few hundred templates, once each, and
+because a template is deterministic, reviewing it once tells you what every send from it will look
+like. The only thing that varies per pet is which field values get slotted in, and the field map plus
+the string match gate box that in.
+
+So review moves to the template level. A clinician approves each **template** once. The verbatim quote
+slots are checked at send time by the same string match used in Q1
+(`working/scripts/verify_quotes.py`), now a runtime gate: if a quoted span does not match a field in
+that pet's record, the message does not go. Anything the template cannot fill safely **fails closed**
+to a task for the clinic, it does not send a guess. On top of that, a sampled audit of live sends and
+a kill switch per journey type per clinic.
 
 This needs a role that does not exist today: a clinical communications owner who approves templates,
 runs the audit, and holds the kill switch. Name it, staff it before go live.

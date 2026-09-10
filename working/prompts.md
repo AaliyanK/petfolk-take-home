@@ -109,7 +109,8 @@ Ikko, Ikko3, Quorra, Pobble, Quorra2. Each: evidence file + design + HTML + veri
 ## Session 11 — package and ship
 
 - Zip built: `petfolk-take-home.zip` (~478 KB, 59 files), full tree minus `.git`, **includes** the 25 records + `_INDEX.txt` for Petfolk.
-- Public GitHub repo created and pushed: https://github.com/AaliyanK/petfolk-take-home (branch renamed master -> main, 31 commits). Verified: `records/` on GitHub holds only `README.md`, zero `.txt` files published anywhere in the tree. The corpus is in the zip only.
+- Public GitHub repo created and pushed: https://github.com/AaliyanK/petfolk-take-home (branch renamed master -> main). Verified: `records/` on GitHub holds only `README.md`, zero `.txt` files published anywhere in the tree. The corpus is in the zip only.
+- Added a "What a template is" section to `question-2/build.md` (the 5-part anatomy table, the `discharge_enrichment_v1` worked example with a field map, the "why the template is the unit of review" argument merged into the review-board section). Trimmed the now-redundant Method-to-machine row. Pushed. Zip rebuilt.
 
 ## Planned
 
